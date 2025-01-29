@@ -1,0 +1,22 @@
+version: "3.8"
+
+services:
+  nerfstudio:
+    image: philipsanm/yolo:latest
+    container_name: yolo_container
+    runtime: nvidia
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    volumes:
+      - "./workspace:/YOLOv"
+    ports:
+      - "7007:7007"
+    shm_size: "12gb"
+    stdin_open: true
+    tty: true
+    restart: "no"  # No reiniciar automáticamente al fallar
