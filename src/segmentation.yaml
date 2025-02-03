@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   nerfstudio:
-    image: philipsanm/yolo:latest
+    image: ultralytics/ultralytics:latest
     container_name: yolo_container
     runtime: nvidia
     deploy:
@@ -20,3 +20,4 @@ services:
     stdin_open: true
     tty: true
     restart: "no"  # No reiniciar automáticamente al fallar
+
