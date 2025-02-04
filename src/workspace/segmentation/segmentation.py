@@ -19,6 +19,8 @@ import os
 
 model = YOLO('yolo11m-seg')
 
+# model = YOLO('yolov8m-seg')
+
 # Workspace from nerfstudio
 processed_folder = '../YOLOv/processed_room/'
 images_folders = ['images', 'images_2', 'images_4', 'images_8']
