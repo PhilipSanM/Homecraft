@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   nerfstudio:
-    image: ultralytics/ultralytics:latest
+    image: philipsanm/yolo:latest
     container_name: yolo_container
     runtime: nvidia
     deploy:

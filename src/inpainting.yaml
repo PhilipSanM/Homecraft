@@ -1,0 +1,23 @@
+version: "3.8"
+
+services:
+  nerfstudio:
+    image: philipsanm/stable_diffusion:latest
+    container_name: SD_container
+    runtime: nvidia
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    volumes:
+      - "./workspace:/SD"
+    ports:
+      - "7007:7007"
+    shm_size: "12gb"
+    stdin_open: true
+    tty: true
+    restart: "no"  # No reiniciar automáticamente al fallar
+    # command: ["bash", "-c", "cd /nerfstudio"]
