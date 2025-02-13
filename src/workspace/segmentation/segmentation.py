@@ -17,9 +17,9 @@ import torch
 import cv2
 import os
 
-model = YOLO('yolo11m-seg')
+# model = YOLO('yolo11m-seg')
 
-# model = YOLO('yolov8m-seg')
+model = YOLO('yolov8m-seg')
 
 # Workspace from nerfstudio
 processed_folder = '../YOLOv/processed_room/'
@@ -49,7 +49,7 @@ for folder in images_folders:
         # print('Processing image: ', img_path)
 
         # Predict
-        results = model(img_path)
+        results = model(img_path, imgsz = (1920, 1920))
         
         # working with every class obtained
         detected_classes = {}
@@ -95,6 +95,17 @@ for folder in images_folders:
 
                     # save to file
                     cv2.imwrite(img_path, object_mask.cpu().numpy())
+
+
+                    # dilatation applying
+                    kernel = cv2.MORPH_ELLIPSE
+                    # kernel = cv2.MORPH_RECT
+                    # kernel = cv2.MORPH_CROSS
+                    element = cv2.getStructuringElement(kernel, (2 * 7 + 1, 2 * 7 + 1),
+                                                        (3, 3))
+                    dilatation =  cv2.dilate(cv2.imread(img_path), element, iterations=7)
+                    # 3 iterations 
+                    cv2.imwrite(img_path, dilatation)
 
 
 

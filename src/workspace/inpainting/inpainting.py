@@ -49,7 +49,8 @@ prompt = ""
 
 
 # find all folders of objects
-# objects = os.listdir(mask_folder)
+objects = os.listdir(mask_folder)
+# Just chair for now
 objects = ['chair']
 
 print('detected objects: ', objects)
@@ -57,6 +58,8 @@ print('detected objects: ', objects)
 
 for object in objects:
     print('Processing object: ', object)
+
+    images_folders = os.listdir(mask_folder + object)
     for folder in images_folders:
         images = os.listdir(mask_folder + object + '/' + folder)
 
@@ -69,6 +72,8 @@ for object in objects:
             # making inpainting
 
             inpainted_image = pipeline(prompt=prompt,
+                                        # height=512,
+                                        # width=512,
                                         image=load_image(og_image),
                                         mask_image=load_image(mask_image),
                                         generator=generator,
