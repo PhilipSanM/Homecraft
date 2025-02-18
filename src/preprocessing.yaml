@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   nerfstudio:
-    image: ghcr.io/nerfstudio-project/nerfstudio:latest
+    image: philipsanm/nerf:latest
     container_name: nerfstudio_container
     runtime: nvidia
     deploy:

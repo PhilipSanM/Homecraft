@@ -91,6 +91,28 @@ docker-compose -f "./src/inpainting.yaml" down
 
 ---
 
+## Visualize Object
+
+### Step 10: Start the Nerfstudio Container
+Run the following command to start the inpainting container:
+```bash
+docker-compose -f ".\src\preprocessing.yaml" up -d
+```
+
+### Step 8: Run the script
+Generate images of independent objects with the following command:
+```bash
+docker exec -it nerfstudio_container bash -c "ns-train nerfacto --data ./nerfstudio/processed_room"
+```
+
+### Step 9: Stop and Remove the nerfstudio Container
+After inpainting, stop and remove the container:
+```bash
+docker-compose -f ".\src\preprocessing.yaml" down
+```
+
+---
+
 ## Notes
 - Ensure all required datasets and models are properly placed in the expected directories before running the scripts.
 - Modify paths accordingly if your directory structure is different.

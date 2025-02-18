@@ -98,12 +98,12 @@ for folder in images_folders:
 
 
                     # dilatation applying
-                    kernel = cv2.MORPH_ELLIPSE
-                    # kernel = cv2.MORPH_RECT
+                    # kernel = cv2.MORPH_ELLIPSE
+                    kernel = cv2.MORPH_RECT
                     # kernel = cv2.MORPH_CROSS
-                    element = cv2.getStructuringElement(kernel, (2 * 7 + 1, 2 * 7 + 1),
+                    element = cv2.getStructuringElement(kernel, (2 * 5 + 1, 2 * 5 + 1),
                                                         (3, 3))
-                    dilatation =  cv2.dilate(cv2.imread(img_path), element, iterations=7)
+                    dilatation =  cv2.dilate(cv2.imread(img_path), element, iterations=3)
                     # 3 iterations 
                     cv2.imwrite(img_path, dilatation)
 
