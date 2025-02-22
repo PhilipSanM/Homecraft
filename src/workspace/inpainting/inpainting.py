@@ -19,17 +19,15 @@ import os
 
 # mask folder
 mask_folder = '../SD/mask_room/'
-images_folders = ['images', 'images_2', 'images_4', 'images_8']
+
 
 # processing folder
 processed_folder = '../SD/processed_room/'
 
 # inpainted folder
-inpainted_folder = '../SD/inpainted_room/'
+inpainted_objects_folder = '../SD/objects/'
 
-# deleting folder if exists
-if os.path.exists(inpainted_folder):
-    os.system('rm -r ' + inpainted_folder)
+
 
 
 # loading model and pipeline
@@ -48,7 +46,7 @@ pipeline.enable_xformers_memory_efficient_attention()
 
 generator = torch.Generator(device="cuda").manual_seed(0)
 
-prompt = "Delete the object"
+prompt = ""
 
 
 # find all folders of objects
@@ -74,7 +72,7 @@ classes = {
     74: "clock", 75: "vase", 76: "scissors", 77: "teddy bear", 78: "hair drier", 79: "toothbrush"
 }
 
-size_order = [79, 76, 78, 67, 65, 64, 66, 40, 41, 42, 43, 44, 39, 74, 75, 26, 27, 24, 28, 29, 32, 34, 35, 36, 37, 38, 73, 77, 56, 45, 68, 69, 70, 71, 63, 14, 15, 16, 55, 54, 53, 52, 51, 50, 49, 48, 47, 46, 57, 59, 60, 58, 61, 62, 72, 17, 18, 19, 21, 22, 23, 20, 1, 2, 3, 7, 5, 6, 9, 10, 11, 12, 8, 4]
+# size_order = [79, 76, 78, 67, 65, 64, 66, 40, 41, 42, 43, 44, 39, 74, 75, 26, 27, 24, 28, 29, 32, 34, 35, 36, 37, 38, 73, 77, 56, 45, 68, 69, 70, 71, 63, 14, 15, 16, 55, 54, 53, 52, 51, 50, 49, 48, 47, 46, 57, 59, 60, 58, 61, 62, 72, 17, 18, 19, 21, 22, 23, 20, 1, 2, 3, 7, 5, 6, 9, 10, 11, 12, 8, 4]
 
 
 for object in objects:
@@ -104,9 +102,17 @@ for object in objects:
                                         ).images[0]
             
 
-            img_folder = inpainted_folder + object + '/' + folder
+            img_folder = inpainted_objects_folder + 'background' + '/' + folder
             if not os.path.exists(img_folder):
                 os.makedirs(img_folder)
+
+            # size of normal images
+            width = 1080
+            height = 1920
+
+            # resizing image
+            inpainted_image = inpainted_image.resize((width, height))
+
             # saving image
             inpainted_image.save(img_folder + '/' + image)
 

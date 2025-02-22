@@ -17,16 +17,22 @@ import torch
 import cv2
 import os
 
-# model = YOLO('yolo11m-seg')
-
 model = YOLO('yolov8m-seg')
 
 # Workspace from nerfstudio
 processed_folder = '../YOLOv/processed_room/'
-images_folders = ['images', 'images_2', 'images_4', 'images_8']
+images_folders = ['images']
 
 # mask folder
 mask_folder = '../YOLOv/mask_room/'
+
+# objects folder
+objects_folder = '../YOLOv/objects/'
+
+# deleting folder if exists
+if os.path.exists(objects_folder):
+    os.system('rm -r ' + objects_folder)
+
 
 # deleting folder if exists
 if os.path.exists(mask_folder):
@@ -63,10 +69,8 @@ for folder in images_folders:
         print('Detected classes: ', detected_classes)
 
 
-        
+
         for result in results:
-
-
             for number, name in detected_classes.items():
 
                 if result.masks:
@@ -97,15 +101,48 @@ for folder in images_folders:
                     cv2.imwrite(img_path, object_mask.cpu().numpy())
 
 
+                    # obtaining just the object
+                    # creating folder
+                    if not os.path.exists(objects_folder + name + '/' + folder):
+                        os.makedirs(objects_folder + name + '/' + folder)
+
+
+
+                    mask = cv2.imread(img_path, cv2.IMREAD_GRAYSCALE)
+                    mask = mask.astype('uint8')
+
+                    og_image = cv2.imread(processed_folder + folder + '/' + image)
+
+                    # resizing images
+                    height, width = og_image.shape[:2]
+                    mask = cv2.resize(mask, (width, height), interpolation=cv2.INTER_NEAREST)
+
+
+                    # applying mask
+                    masked_image = cv2.bitwise_and(og_image, og_image, mask=mask)
+
+                    # removing black background and saving
+                    masked_image = cv2.cvtColor(masked_image, cv2.COLOR_BGR2BGRA)
+                    masked_image[:, :, 3] = mask
+
+                    # saving masked image
+                    masked_file = objects_folder + name + '/' + folder + '/' + image
+                    cv2.imwrite(masked_file, masked_image)
+
+
+
                     # dilatation applying
-                    # kernel = cv2.MORPH_ELLIPSE
-                    kernel = cv2.MORPH_RECT
+                    kernel = cv2.MORPH_ELLIPSE
+                    # kernel = cv2.MORPH_RECT
                     # kernel = cv2.MORPH_CROSS
                     element = cv2.getStructuringElement(kernel, (2 * 5 + 1, 2 * 5 + 1),
                                                         (3, 3))
-                    dilatation =  cv2.dilate(cv2.imread(img_path), element, iterations=3)
+                    dilatation =  cv2.dilate(cv2.imread(img_path), element, iterations=7)
                     # 3 iterations 
                     cv2.imwrite(img_path, dilatation)
+
+
+
 
 
 
