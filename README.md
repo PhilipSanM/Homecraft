@@ -4,7 +4,16 @@
         <img alt="License" src="https://img.shields.io/badge/License-Apache_2.0-blue.svg"></a>
 </p>
 
-# Homecraft
+
+<p align="middle">
+    <h1> Homecraft </h1>
+</p>
+
+
+<p align='left'>
+    <img src="https://github.com/user-attachments/assets/6c09fb94-9e98-4a04-86a6-b26a66392b72" alt="chair" width="52%">
+</p>
+
 
 ## About
 HomeCraft is an AI-driven project that allows users to capture a video of their room, extract key frames, segment objects, apply inpainting, and generate a fully editable 3D model of their space. The goal is to enable seamless virtual home redesigns without physically modifying the real-world environment.
