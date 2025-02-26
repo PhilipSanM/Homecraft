@@ -158,8 +158,27 @@ docker-compose -f ".\src\preprocessing.yaml" down
 ## Future Enhancements
 - Automate workflow with a single script.
 - Improve background images.
-- Add UI.
+- Add UI.  - EMA
 - Make desktop application.
 
----
+
+- usar bounding box  OSCAR
+- Unir mismas mascaras en una imagen  / unir todas las mascaras para hacer el inapinting OSCAR
+- Stable diffusion hiperparametros OSCAR
+- tener un minimo de imagenes en mascaras por sino eliminar el objetoc  / EMI
+- kmeans acomodar imagenes, quitar mascaras sino queda.
+NERF LA ESCENA OG 
+
+- Daniel justificar porq modelos tradicionales vs DNN EMI
+- Rodolfo, justificar porq es imagen o video, arquitectos.
+- Gaussplatt HABLAR CON SAULO
+- Stable diffusion  Felipe
+- 
+- 
+## Ya esta
+- Saulo correcciones
+- 
+
+  
+
 
