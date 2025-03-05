@@ -22,32 +22,32 @@ import time
 
 # CONSTANTS
 # mask folder
-MASK_FOLDER = '../SD/mask_room/'
+MASK_FOLDER = '../SD/mask_room/masks/images/'
 
 
 # processing folder
-PROCESSED_FOLDER = '../SD/processed_room/'
+PROCESSED_FOLDER = '../SD/processed_room/images/'
 
 # inpainted folder
 INPAINTED_OBJECTS_FOLDER = '../SD/objects/'
 
 
 # YOLO YOLO_CLASSES
-YOLO_YOLO_CLASSES = {
-    0: "person", 1: "bicycle", 2: "car", 3: "motorcycle", 4: "airplane", 5: "bus", 6: "train", 7: "truck", 8: "boat", 
-    9: "traffic light", 10: "fire hydrant", 11: "stop sign", 12: "parking meter", 13: "bench", 14: "bird", 15: "cat", 
-    16: "dog", 17: "horse", 18: "sheep", 19: "cow", 20: "elephant", 21: "bear", 22: "zebra", 23: "giraffe", 24: "backpack", 
-    25: "umbrella", 26: "handbag", 27: "tie", 28: "suitcase", 29: "frisbee", 30: "skis", 31: "snowboard", 32: "sports ball", 
-    33: "kite", 34: "baseball bat", 35: "baseball glove", 36: "skateboard", 37: "surfboard", 38: "tennis racket", 39: "bottle", 
-    40: "wine glass", 41: "cup", 42: "fork", 43: "knife", 44: "spoon", 45: "bowl", 46: "banana", 47: "apple", 48: "sandwich", 
-    49: "orange", 50: "broccoli", 51: "carrot", 52: "hot dog", 53: "pizza", 54: "donut", 55: "cake", 56: "chair", 57: "couch", 
-    58: "potted plant", 59: "bed", 60: "dining table", 61: "toilet", 62: "tv", 63: "laptop", 64: "mouse", 65: "remote", 
-    66: "keyboard", 67: "cell phone", 68: "microwave", 69: "oven", 70: "toaster", 71: "sink", 72: "refrigerator", 73: "book", 
-    74: "clock", 75: "vase", 76: "scissors", 77: "teddy bear", 78: "hair drier", 79: "toothbrush"
-}
+# YOLO_YOLO_CLASSES = {
+#     0: "person", 1: "bicycle", 2: "car", 3: "motorcycle", 4: "airplane", 5: "bus", 6: "train", 7: "truck", 8: "boat", 
+#     9: "traffic light", 10: "fire hydrant", 11: "stop sign", 12: "parking meter", 13: "bench", 14: "bird", 15: "cat", 
+#     16: "dog", 17: "horse", 18: "sheep", 19: "cow", 20: "elephant", 21: "bear", 22: "zebra", 23: "giraffe", 24: "backpack", 
+#     25: "umbrella", 26: "handbag", 27: "tie", 28: "suitcase", 29: "frisbee", 30: "skis", 31: "snowboard", 32: "sports ball", 
+#     33: "kite", 34: "baseball bat", 35: "baseball glove", 36: "skateboard", 37: "surfboard", 38: "tennis racket", 39: "bottle", 
+#     40: "wine glass", 41: "cup", 42: "fork", 43: "knife", 44: "spoon", 45: "bowl", 46: "banana", 47: "apple", 48: "sandwich", 
+#     49: "orange", 50: "broccoli", 51: "carrot", 52: "hot dog", 53: "pizza", 54: "donut", 55: "cake", 56: "chair", 57: "couch", 
+#     58: "potted plant", 59: "bed", 60: "dining table", 61: "toilet", 62: "tv", 63: "laptop", 64: "mouse", 65: "remote", 
+#     66: "keyboard", 67: "cell phone", 68: "microwave", 69: "oven", 70: "toaster", 71: "sink", 72: "refrigerator", 73: "book", 
+#     74: "clock", 75: "vase", 76: "scissors", 77: "teddy bear", 78: "hair drier", 79: "toothbrush"
+# }
 
 # Yolo classes ordered by size
-YOLO_CLASSES_ORDER = [79, 76, 78, 67, 65, 64, 66, 40, 41, 42, 43, 44, 39, 74, 75, 26, 27, 24, 28, 29, 32, 34, 35, 36, 37, 38, 73, 77, 56, 45, 68, 69, 70, 71, 63, 14, 15, 16, 55, 54, 53, 52, 51, 50, 49, 48, 47, 46, 57, 59, 60, 58, 61, 62, 72, 17, 18, 19, 21, 22, 23, 20, 1, 2, 3, 7, 5, 6, 9, 10, 11, 12, 8, 4]
+#YOLO_CLASSES_ORDER = [79, 76, 78, 67, 65, 64, 66, 40, 41, 42, 43, 44, 39, 74, 75, 26, 27, 24, 28, 29, 32, 34, 35, 36, 37, 38, 73, 77, 56, 45, 68, 69, 70, 71, 63, 14, 15, 16, 55, 54, 53, 52, 51, 50, 49, 48, 47, 46, 57, 59, 60, 58, 61, 62, 72, 17, 18, 19, 21, 22, 23, 20, 1, 2, 3, 7, 5, 6, 9, 10, 11, 12, 8, 4]
 
 # size of normal images
 WIDTH = 1080
@@ -88,50 +88,39 @@ def main():
     # get pipeline function
     pipeline, generator, prompt = get_pipeline()
 
-    # get all objects in folder
-    objects = get_all_objects_in_folder(MASK_FOLDER)
-
     # print('Objects: ', objects)
 
+    images = os.listdir(MASK_FOLDER)
 
-    # process all objects
-    for object in objects:
-        # print('Processing object: ', object)
+    for image in images:
 
-        images_folders = os.listdir(MASK_FOLDER + object)
-        for folder in images_folders:
-            images = os.listdir(MASK_FOLDER + object + '/' + folder)
+        og_image = PROCESSED_FOLDER + '/' + image
+        mask_image = MASK_FOLDER + '/' + image
+        # print('Processing image: ', og_image)
+        # making inpainting
 
-            for image in images:
+        inpainted_image = pipeline(prompt=prompt,
+                                    # HEIGHT=512,
+                                    # WIDTH=512,
+                                    image=load_image(og_image),
+                                    mask_image=load_image(mask_image),
+                                    generator=generator,
+                                    guidance_scale=9, #8.5 - 9
+                                    num_inference_steps=19,  # steps between 15 and 30 work well for us, numero de inferencias 25
+                                    strength=0.9999, # menos raras
+                                    ).images[0]
+        
 
-                og_image = PROCESSED_FOLDER + folder + '/' + image
-                mask_image = MASK_FOLDER + object + '/' + folder + '/' + image
-
-                # print('Processing image: ', og_image)
-                # making inpainting
-
-                inpainted_image = pipeline(prompt=prompt,
-                                            # HEIGHT=512,
-                                            # WIDTH=512,
-                                            image=load_image(og_image),
-                                            mask_image=load_image(mask_image),
-                                            generator=generator,
-                                            guidance_scale=8.0, #8.5 - 9
-                                            num_inference_steps=20,  # steps between 15 and 30 work well for us, numero de inferencias 25
-                                            strength=0.99, # menos raras
-                                            ).images[0]
-                
-
-                img_folder = INPAINTED_OBJECTS_FOLDER + 'background' + '/' + folder
-                if not os.path.exists(img_folder):
-                    os.makedirs(img_folder)
+        img_folder = INPAINTED_OBJECTS_FOLDER + 'background' + '/' + 'images'
+        if not os.path.exists(img_folder):
+            os.makedirs(img_folder)
 
 
-                # resizing image
-                inpainted_image = inpainted_image.resize((WIDTH, HEIGHT))
+        # resizing image
+        inpainted_image = inpainted_image.resize((WIDTH, HEIGHT))
 
-                # saving image
-                inpainted_image.save(img_folder + '/' + image)
+        # saving image
+        inpainted_image.save(img_folder + '/' + image)
 
 
 if __name__ == '__main__':
