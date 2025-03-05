@@ -133,13 +133,25 @@ for folder in images_folders:
 
                     # dilatation applying
                     kernel = cv2.MORPH_ELLIPSE
-                    # kernel = cv2.MORPH_RECT
-                    # kernel = cv2.MORPH_CROSS
+                    #kernel = cv2.MORPH_RECT
+                    #kernel = cv2.MORPH_CROSS
                     element = cv2.getStructuringElement(kernel, (2 * 5 + 1, 2 * 5 + 1),
                                                         (3, 3))
                     dilatation =  cv2.dilate(cv2.imread(img_path), element, iterations=7)
                     # 3 iterations 
-                    cv2.imwrite(img_path, dilatation)
+                    #cv2.imwrite(img_path, dilatation)
+                    # Convertir la máscara a uint8 (si no lo está)
+                    #mask_uint8 = dilatation.cpu().numpy().astype('uint8')
+
+                    # Definir un kernel adecuado. El tamaño dependerá de la separación que presentes.
+                    kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (15, 15))  # Ajusta el tamaño según sea necesario
+
+                    # Aplicar el cierre morfológico para unir las partes separadas
+                    mask_closed = cv2.morphologyEx(dilatation, cv2.MORPH_CLOSE, kernel)
+
+                    # Guardar o usar mask_closed en lugar de la máscara original
+                    cv2.imwrite(img_path, mask_closed)
+
 
 
 

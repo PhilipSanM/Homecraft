@@ -18,14 +18,14 @@ from diffusers.utils import load_image, make_image_grid
 import os
 
 # mask folder
-mask_folder = '../SD/mask_room/'
+mask_folder = '../mask_room/'
 
 
 # processing folder
-processed_folder = '../SD/processed_room/'
+processed_folder = '../processed_room/'
 
 # inpainted folder
-inpainted_objects_folder = '../SD/objects/'
+inpainted_objects_folder = '../objects/'
 
 
 
@@ -41,7 +41,7 @@ pipeline.enable_model_cpu_offload()
 
 
 # remove following line if xFormers is not installed or you have PyTorch 2.0 or higher installed
-pipeline.enable_xformers_memory_efficient_attention()
+#pipeline.enable_xformers_memory_efficient_attention()
 
 
 generator = torch.Generator(device="cuda").manual_seed(0)
