@@ -17,11 +17,7 @@ from ultralytics import YOLO
 import torch
 import cv2
 import os
-from distutils.dir_util import copy_tree
-import shutil
-from PIL import Image
 import numpy as np
-from PIL import Image
 from sklearn.cluster import KMeans
 from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
@@ -33,7 +29,6 @@ YOLO_MODEL = 'yolov8m-seg'
 
 # Workspace from nerfstudio
 PROCESSED_FOLDER = '../YOLOv/processed_room/'
-IMAGES_COPY = '../YOLOv/processed_room/images_copy/'
 IMAGES_FOLDERS = ['images']
 
 # mask folder
@@ -331,24 +326,6 @@ def get_all_classes_obtained(results):
 
     return detected_classes
 
-def resize_images_in_folder(folder, output_folder, size=(512, 512)):
-    if not os.path.exists(output_folder):
-        os.makedirs(output_folder)
-    
-    for image_name in os.listdir(folder):
-        image_path = os.path.join(folder, image_name)
-        image = Image.open(image_path)
-        image = image.resize(size)
-        output_path = os.path.join(output_folder, image_name)
-        image.save(output_path)
-        #print(f"Resized image saved as {output_path}")
-# Example Usage
-
-
-
-
-        #print(f"Resized image saved as {output_path}")
-
 def image_move():
 
     masks_folder = os.path.join(MASK_FOLDER, "masks")
@@ -369,40 +346,14 @@ def image_move():
         for filename in os.listdir(class_path):
 
             file_path = os.path.join(class_path, filename)
-            def binarize_and_invert(image_path, output_path, threshold=128):
-                """
-                1. Converts the image to black and white (0 and 255).
-                2. Inverts the colors: Black (0) becomes White (255) and vice versa.
-                """
-                # Open image and convert to grayscale
-                image = Image.open(image_path).convert("L")  # Convert to grayscale
-
-                # Convert image to NumPy array for processing
-                img_array = np.array(image)
-
-                # Apply binarization (Thresholding)
-                img_array = np.where(img_array > threshold, 255, 0)
-
-                # Invert colors (0 ↔ 255)
-                img_array = 255 - img_array
-
-                # Convert array back to an image
-                processed_image = Image.fromarray(img_array.astype(np.uint8))
-
-                # Save the processed image
-                processed_image.save(output_path)
-            binarize_and_invert(file_path, os.path.join(masks_folder, filename))
-            #os.rename(file_path, os.path.join(masks_folder, filename))
+            os.rename(file_path, os.path.join(masks_folder, filename))
     # Obtener los nombres de archivos en processed_room (sin extensión)
     processed_files = {f for f in os.listdir(masks_folder) if os.path.isfile(os.path.join(masks_folder, f))}
+
     # Recorrer las imágenes procesadas
     processed_images = PROCESSED_FOLDER + 'images/'
-    if not os.path.exists(IMAGES_COPY):
-            os.makedirs(IMAGES_COPY)
-    copy_tree(processed_images, IMAGES_COPY)
-    for filename in os.listdir(IMAGES_COPY):        
-        #crear una copia de la imagen 
-        
+
+    for filename in os.listdir(processed_images):        
         # elmiminar archivos que no se encuentren en processed_room
         if filename not in processed_files:
             os.remove(os.path.join(processed_images, filename))
@@ -480,17 +431,6 @@ def main():
        
     replace_masks_with_filled_bbox(UNKNOWN_FOLDER)
     image_move()
-    masks_folder = os.path.join(MASK_FOLDER, "masks")
-    masks_folder = masks_folder + '/' + 'images/'
-    # Resize masks
-    folder = masks_folder
-    output_folder = masks_folder
-    resize_images_in_folder(folder, output_folder)
-    #Resize images in folder
-    folder = IMAGES_COPY
-    output_folder = IMAGES_COPY
-    resize_images_in_folder(folder, output_folder)
-
 
 
 
