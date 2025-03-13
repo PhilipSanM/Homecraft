@@ -11,8 +11,11 @@
 
 
 <p align='left'>
-    <img src="https://github.com/user-attachments/assets/6c09fb94-9e98-4a04-86a6-b26a66392b72" alt="chair" width="52%">
+    <img src="https://github.com/user-attachments/assets/6c09fb94-9e98-4a04-86a6-b26a66392b72" alt="chair" width="49%">
+    <img src="https://github.com/user-attachments/assets/34d37c5c-db56-403d-9824-569ea278631e" alt="chair" width="49%">
 </p>
+
+
 
 
 ## About
@@ -156,29 +159,41 @@ docker-compose -f ".\src\preprocessing.yaml" down
 ---
 
 ## Future Enhancements
-- Automate workflow with a single script.
-- Improve background images.
-- Add UI.  - EMA
-- Make desktop application.
+
+- UI pantallas faltantes  - EMA
+  
+- Meter Kmeans / Morfologia     EMI 
 
 
-- usar bounding box  OSCAR
-- Unir mismas mascaras en una imagen  / unir todas las mascaras para hacer el inapinting OSCAR
-- Stable diffusion hiperparametros OSCAR
-- tener un minimo de imagenes en mascaras por sino eliminar el objetoc  / EMI
-- kmeans acomodar imagenes, quitar mascaras sino queda.
-NERF LA ESCENA OG 
-
-- Daniel justificar porq modelos tradicionales vs DNN EMI
-- Rodolfo, justificar porq es imagen o video, arquitectos.
+- Daniel justificar porq modelos tradicionales vs DNN   EMI
 - Gaussplatt HABLAR CON SAULO
-- Stable diffusion  Felipe
-- 
-- 
+
+- Preguntar macario de arquitectos. (PIPE) Luego mostrarle al rodolfo en revision.
+- Conectar los botones de las pantallas con EMA y PIPE   -  Viernes
+
+- Contenedor de MAT y script de inpainting con MAT   OSACR Y PIPE  Manana en la tarde 4🕥
+
+- El script de descargar modelo PIPE
+- Contactar sinodales / seguimiento
+
+- Comando de visualizacion trata de jalarlo a la misma UI EMA
+
+- La edicion de color sobre imagenes 2D. PENDIENTE
+- Unir Stable diffusion y MAT   DEBATIBLE
+
+- Probar nuevo video del cuarto.  (Lunes)
+
+
+
 ## Ya esta
 - Saulo correcciones
-- 
+- usar bounding box  OSCAR  (Listo)
+- Unir mismas mascaras en una imagen  / unir todas las mascaras para hacer el inapinting OSCAR  (Listo)
 
+
+## YANO
+- Stable diffusion hiperparametros OSCAR  YANO
+- tener un minimo de imagenes en mascaras por sino eliminar el objetoc  / EMI YANO
   
 
 

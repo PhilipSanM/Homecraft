@@ -2,9 +2,7 @@
 __pycache__/
 *.py[cod]
 *$py.class
-*.jpg
-*.jpeg
-*.png
+
 # C extensions
 *.so
 
@@ -174,5 +172,11 @@ cython_debug/
 
 
 
-# tests folder
-# workspace/
+# images
+
+src/workspace/objects/
+src/workspace/mask_room/
+src/workspace/processed_room/
+*.jpg
+*.jpeg
+*.png

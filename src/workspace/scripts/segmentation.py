@@ -17,11 +17,15 @@ from ultralytics import YOLO
 import torch
 import cv2
 import os
+<<<<<<< HEAD
 from distutils.dir_util import copy_tree
 import shutil
 from PIL import Image
 import numpy as np
 from PIL import Image
+=======
+import numpy as np
+>>>>>>> a21c6223aa05758647afcb3823d88e93caf9bfc0
 from sklearn.cluster import KMeans
 from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
@@ -331,6 +335,7 @@ def get_all_classes_obtained(results):
 
     return detected_classes
 
+<<<<<<< HEAD
 def resize_images_in_folder(folder, output_folder, size=(512, 512)):
     if not os.path.exists(output_folder):
         os.makedirs(output_folder)
@@ -343,7 +348,39 @@ def resize_images_in_folder(folder, output_folder, size=(512, 512)):
         image.save(output_path)
         #print(f"Resized image saved as {output_path}")
 # Example Usage
+=======
+def image_move():
+>>>>>>> a21c6223aa05758647afcb3823d88e93caf9bfc0
 
+    masks_folder = os.path.join(MASK_FOLDER, "masks")
+
+    # Crear la carpeta masks si no existe
+    os.makedirs(masks_folder, exist_ok=True)
+    masks_folder = masks_folder + '/' + 'images/'
+    os.makedirs(masks_folder, exist_ok=True)
+
+
+
+    # Recorrer las imágenes en mask_room
+    for class_name in os.listdir(MASK_FOLDER):
+        if class_name == "masks":
+            continue
+        class_path = os.path.join(MASK_FOLDER, class_name)+ '/images/'
+        # Recorrer las imágenes en la carpeta de la clase
+        for filename in os.listdir(class_path):
+
+            file_path = os.path.join(class_path, filename)
+            os.rename(file_path, os.path.join(masks_folder, filename))
+    # Obtener los nombres de archivos en processed_room (sin extensión)
+    processed_files = {f for f in os.listdir(masks_folder) if os.path.isfile(os.path.join(masks_folder, f))}
+
+    # Recorrer las imágenes procesadas
+    processed_images = PROCESSED_FOLDER + 'images/'
+
+    for filename in os.listdir(processed_images):        
+        # elmiminar archivos que no se encuentren en processed_room
+        if filename not in processed_files:
+            os.remove(os.path.join(processed_images, filename))
 
 
 
@@ -466,6 +503,7 @@ def main():
     for name in os.listdir(MASK_FOLDER):
         class_path = MASK_FOLDER + name + '/' + folder + '/'
         for image in os.listdir(class_path):
+<<<<<<< HEAD
 
             image_path = os.path.join(class_path, image)
             # obtaining just the object
@@ -490,9 +528,27 @@ def main():
     folder = IMAGES_COPY
     output_folder = IMAGES_COPY
     resize_images_in_folder(folder, output_folder)
+=======
+>>>>>>> a21c6223aa05758647afcb3823d88e93caf9bfc0
+
+            image_path = os.path.join(class_path, image)
+            # obtaining just the object
+            OBJECT_WITHOUT_BACK_FOLDER = OBJECTS_FOLDER + name + '/' + folder
+            OG_IMAGE_PATH = PROCESSED_FOLDER + folder + '/' + image
+
+            get_object_from_mask(image_path, OG_IMAGE_PATH, image, OBJECT_WITHOUT_BACK_FOLDER)
+
+<<<<<<< HEAD
+=======
+            # applying dilatation
+            make_dilatation_2_image(image_path)
+
+       
+    replace_masks_with_filled_bbox(UNKNOWN_FOLDER)
+    image_move()
 
 
-
+>>>>>>> a21c6223aa05758647afcb3823d88e93caf9bfc0
 
 if __name__ == '__main__':
     print('Starting segmentation...')
