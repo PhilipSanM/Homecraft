@@ -18,6 +18,25 @@ from diffusers import AutoPipelineForInpainting
 from diffusers.utils import load_image, make_image_grid
 import os
 
+
+
+
+import sys
+
+import subprocess
+
+# Definir el comando como una lista
+command = [
+    "python", "..\\MAT\\generate_image.py",
+    "--network", "pretrained/Places_512_FullData.pkl",
+    "--dpath", "test_sets/test/images",
+    "--mpath", "test_sets/test/masks",
+    "--outdir", "samples"
+]
+
+# Ejecutar el script con CLI
+subprocess.run(command, check=True)
+
 import time
 
 # CONSTANTS
