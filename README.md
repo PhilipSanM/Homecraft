@@ -4,15 +4,21 @@
         <img alt="License" src="https://img.shields.io/badge/License-Apache_2.0-blue.svg"></a>
 </p>
 
-
-<p align="middle">
-    <h1> Homecraft </h1>
+<p align="center">
+    <!-- logo -->
+    <img src="https://github.com/user-attachments/assets/fc36201b-3fcb-4e30-a771-83674ad9e8f3" alt="logo" width="30%">
 </p>
+
+
+<p align="center">
+    <i>  A desktop app for creating and editing independent 3D models for interior design and decoration. </i>
+</p>
+
 
 
 <p align='left'>
     <img src="https://github.com/user-attachments/assets/6c09fb94-9e98-4a04-86a6-b26a66392b72" alt="chair" width="49%">
-    <img src="https://github.com/user-attachments/assets/34d37c5c-db56-403d-9824-569ea278631e" alt="chair" width="49%">
+    <img src="https://github.com/user-attachments/assets/34d37c5c-db56-403d-9824-569ea278631e" alt="background" width="49%">
 </p>
 
 
