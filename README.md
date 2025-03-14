@@ -164,7 +164,7 @@ docker-compose -f ".\src\preprocessing.yaml" down
 
 ---
 
-## Future Enhancements
+## Trabajo a futuro
 
 - UI pantallas faltantes  - EMA
   
@@ -188,7 +188,22 @@ docker-compose -f ".\src\preprocessing.yaml" down
 - Unir Stable diffusion y MAT   DEBATIBLE
 
 - Probar nuevo video del cuarto.  (Lunes)
+- Requerimientos de usuarios para subir el video, calidad, tiempo, etc
+- Arquitectos:   de a 5 personas mas o menos para saber su opinion o encuestas binarias
 
+- Comparativa de todos los modelos utilizados, el porque y como se quedan en la aplicacion final
+
+### Para la presentacion de TT
+- Titulo
+- Pequena introduccion de la importancia de porque exploramos este problema, (la MOTIVACION)
+- Que son los modelos de inpainting, segmentacion, reconstruccion, el porque y que hacen en la applicacion.
+- Introduccion del NERF
+- Propuesta de solucion a la problematica (Con los diagramas).
+Presentar los objetivos generales y particulares
+- La experimentacion de los modelos escogidos y las comparativas.   y puntos especificos del objeto generado (los que son en zoom). (Usando otras herramientas y el tiempo). Reportar los req de computo
+- Video demostrativo (el objeto retirado, lo que se obtuvo)
+- Conclusiones
+- Trabajo a futuro (que consideramos que cambiariamos)
 
 
 ## Ya esta
