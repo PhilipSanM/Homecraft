@@ -1,5 +1,5 @@
 import flet as ft
-
+import shutil
 def home_view(page, appbar):
     page.title = "HomeCraft - Inicio"
     page.update()
@@ -9,6 +9,7 @@ def home_view(page, appbar):
     def upload_video(e):
         nonlocal video_path
         if video_path:
+            shutil.copy(video_path, f"./src/workspace/room.{video_path[-3:]}")
             page.go("/loading")
         
         else:
@@ -18,6 +19,7 @@ def home_view(page, appbar):
         nonlocal video_path
         if e.files:
             video_path = e.files[0].path
+            
             upload_button.text = "Subir y procesar"
             page.update()
 
@@ -54,6 +56,7 @@ def home_view(page, appbar):
     upload_button_container = ft.Container(upload_button, left=1312, top=589 - toolbar_h, margin=0)
 
     file_picker = ft.FilePicker(on_result=file_selected)
+    
     page.overlay.append(file_picker)
     return ft.View(
         route="/",

@@ -1,6 +1,7 @@
 import flet as ft
 from views.home import home_view
 from views.loading import loading_view
+from views.menu import menu_view
 
 
 def main(page: ft.Page):
@@ -24,6 +25,8 @@ def main(page: ft.Page):
             page.views.append(home_view(page,appbar))
         elif page.route == "/loading":
             page.views.append(loading_view(page,appbar))
+        elif page.route == "/menu":
+            page.views.append(menu_view(page,appbar))
         page.update()
         
     page.on_route_change = route_change
