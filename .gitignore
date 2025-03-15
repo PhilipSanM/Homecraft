@@ -177,6 +177,3 @@ cython_debug/
 src/workspace/objects/
 src/workspace/mask_room/
 src/workspace/processed_room/
-*.jpg
-*.jpeg
-*.png
