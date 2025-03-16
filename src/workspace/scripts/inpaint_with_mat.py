@@ -17,6 +17,10 @@ import os
 import subprocess
 import PIL.Image as Image
 
+import time
+
+start = time.time()
+
 # objects folder
 OBJECTS_FOLDER = "../MAT/objects/background/images"
 
@@ -48,7 +52,11 @@ subprocess.run(command, check=True)
 upscale_images_in_folder(OBJECTS_FOLDER, OBJECTS_FOLDER)
 # python generate_image.py --network pretrained/Places_512_FullData.pkl --dpath test_sets/test/images --mpath test_sets/test/masks --outdir objects/background/images
 
+end = time.time()
 
+print("Inpainting finished in: ", end - start)
 
 
 # docker exec -it MAT_container bash -c "python ../MAT/scripts/inpaint_with_mat.py"
+
+# docker-compose -f "./src/inpainting_mat.yaml" down

@@ -405,7 +405,7 @@ def image_move():
         
         # elmiminar archivos que no se encuentren en processed_room
         if filename not in processed_files:
-            os.remove(os.path.join(processed_images, filename))
+            os.remove(os.path.join(IMAGES_COPY, filename))
 
 def main():
 
