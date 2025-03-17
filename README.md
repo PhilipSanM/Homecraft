@@ -139,7 +139,7 @@ docker-compose -f ".\src\preprocessing.yaml" up -d
 ### Step 2: Run the script
 Generate images of independent objects with the following command:
 ```bash
-docker exec -it nerfstudio_container bash -c "ns-train nerfacto --data ./nerfstudio/processed_room"
+docker exec -it nerfstudio_container bash -c "ns-train splatfacto --data ./nerfstudio/processed_room --steps_per_save 100"
 ```
 
 ### Step 3: Stop and Remove the Nerfstudio Container
@@ -148,6 +148,28 @@ After inpainting, stop and remove the container:
 docker-compose -f ".\src\preprocessing.yaml" down
 ```
 
+
+---
+
+## Export Objects
+
+### Step 1: Start the Nerfstudio Container
+Run the following command to start the inpainting container:
+```bash
+docker-compose -f ".\src\preprocessing.yaml" up -d
+```
+
+### Step 2: Run the script
+Export  objects to export folder
+```bash
+docker exec -it nerfstudio_container bash -c "python ./nerfstudio/scripts/export.py --object_name {object_name}"
+```
+
+### Step 3: Stop and Remove the Nerfstudio Container
+After inpainting, stop and remove the container:
+```bash
+docker-compose -f ".\src\preprocessing.yaml" down
+```
 ---
 
 ## Notes
