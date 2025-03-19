@@ -190,30 +190,42 @@ docker-compose -f ".\src\preprocessing.yaml" down
 
 - UI pantallas faltantes  - EMA
   
-- Meter Kmeans / Morfologia     EMI 
-
+- Meter Kmeans / Morfologia     EMI
 
 - Daniel justificar porq modelos tradicionales vs DNN   EMI
-- Gaussplatt HABLAR CON SAULO
+- Meter Gaussian EMI
 
-- Preguntar macario de arquitectos. (PIPE) Luego mostrarle al rodolfo en revision.
-- Conectar los botones de las pantallas con EMA y PIPE   -  Viernes
-
-- Contenedor de MAT y script de inpainting con MAT   OSACR Y PIPE  Manana en la tarde 4🕥
-
-- El script de descargar modelo PIPE
-- Contactar sinodales / seguimiento
+- Contactar sinodales / seguimiento   PIPE
 
 - Comando de visualizacion trata de jalarlo a la misma UI EMA
 
-- La edicion de color sobre imagenes 2D. PENDIENTE
-- Unir Stable diffusion y MAT   DEBATIBLE
+- La edicion de color sobre imagenes 2D. EMI
 
 - Probar nuevo video del cuarto.  (Lunes)
-- Requerimientos de usuarios para subir el video, calidad, tiempo, etc
+
+- Requerimientos de usuarios para subir el video, calidad, tiempo, etc - Emma
+
+- Preguntar macario de arquitectos. (PIPE) Luego mostrarle al rodolfo en revision.
 - Arquitectos:   de a 5 personas mas o menos para saber su opinion o encuestas binarias
 
 - Comparativa de todos los modelos utilizados, el porque y como se quedan en la aplicacion final
+
+
+
+Checeo de hiperparametros
+- Hiperparametros para MAT                 - Justificar en documento - Emi
+- Hiperparametros para GaussianSplatting   - Justificar en documento - Pipe
+- Hiperparanetris par Yolov8               - Justificar en documento - Oscar
+
+    (Con grid search y evaluar con criterio)  VIDEO Q YA FUNCIONO
+- Evaluacion matematica como agarramos los mejores modelos para nuestra aplicacion x etapa.  
+
+- documentar primera prueba con el video del EMI (Un cuarto una silla.)
+- Final documentar con el video del cuarto (Mesa, cama, lampara)
+
+
+- Explicarle RR sobre las redes neuronales.
+- Hacer juntas con sinodales
 
 ### Para la presentacion de TT
 - Titulo
@@ -226,17 +238,20 @@ Presentar los objetivos generales y particulares
 - Video demostrativo (el objeto retirado, lo que se obtuvo)
 - Conclusiones
 - Trabajo a futuro (que consideramos que cambiariamos)
-
+- El script de descargar modelo PIPE
+- 
 
 ## Ya esta
 - Saulo correcciones
 - usar bounding box  OSCAR  (Listo)
 - Unir mismas mascaras en una imagen  / unir todas las mascaras para hacer el inapinting OSCAR  (Listo)
+- Conectar los botones de las pantallas con EMA y PIPE   -  Viernes
+- Contenedor de MAT y script de inpainting con MAT   OSACR Y PIPE  Manana en la tarde 4🕥
 
 
 ## YANO
 - Stable diffusion hiperparametros OSCAR  YANO
 - tener un minimo de imagenes en mascaras por sino eliminar el objetoc  / EMI YANO
-  
+  - Unir Stable diffusion y MAT   DEBATIBL
 
 
