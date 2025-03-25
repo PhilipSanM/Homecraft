@@ -98,7 +98,9 @@ def main():
     
     # working with background
     # print('working background')
-    remove_images_with_objects_in_background()
+    # 
+    # This line in code only with Stable diffusion model
+    # remove_images_with_objects_in_background()
 
 
     # working with objects
