@@ -86,7 +86,7 @@ After segmentation, stop and remove the container:
 docker-compose -f "./src/segmentation.yaml" down
 ```
 
-## 3. Stable Diffusion Inpainting
+## 3.1. Stable Diffusion Inpainting
 
 ### Step 7: Start the Inpainting Container
 Run the following command to start the inpainting container:
@@ -104,6 +104,27 @@ docker exec -it SD_container bash -c "python ../SD/scripts/inpainting.py"
 After inpainting, stop and remove the container:
 ```bash
 docker-compose -f "./src/inpainting.yaml" down
+```
+
+
+## 3.2. MAT Inpainting
+
+### Step 7: Start the Inpainting Container
+Run the following command to start the inpainting container:
+```bash
+docker-compose -f "./src/inpainting_mat.yaml" up -d
+```
+
+### Step 8: Run the Inpainting Script
+Generate images of independent objects with the following command:
+```bash
+docker exec -it SD_container bash -c "python ../MAT/scripts/inpaint_with_mat.py"
+```
+
+### Step 9: Stop and Remove the Inpainting Container
+After inpainting, stop and remove the container:
+```bash
+docker-compose -f "./src/inpainting_mat.yaml" down
 ```
 
 ## 4. Postprocessing
