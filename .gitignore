@@ -185,3 +185,7 @@ src/workspace/objects/
 src/workspace/mask_room/
 src/workspace/processed_room/
 src/workspace/exports/
+
+# MAT model.
+
+src/workspace/MAT/pretrained/

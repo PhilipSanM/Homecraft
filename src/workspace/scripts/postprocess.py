@@ -125,6 +125,10 @@ def main():
 
             if os.path.exists(OBJECT_IMAGES_FOLDER + 'frame_' + image_number + '.png'):
                 # print('-----image already exists: ', i)
+                # Adding the RGBA channel to the image in background
+                img = Image.open(OBJECT_IMAGES_FOLDER + 'frame_' + image_number + '.png')
+                img = img.convert('RGBA')
+                img.save(OBJECT_IMAGES_FOLDER + 'frame_' + image_number + '.png')
                 continue
             
             # print('creating dummy image: ', i)
