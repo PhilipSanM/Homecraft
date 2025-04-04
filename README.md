@@ -216,8 +216,6 @@ docker-compose -f ".\src\preprocessing.yaml" down
 - Daniel justificar porq modelos tradicionales vs DNN   EMI
 - Meter Gaussian EMI
 
-- Contactar sinodales / seguimiento   PIPE
-
 - Comando de visualizacion trata de jalarlo a la misma UI EMA
 
 - La edicion de color sobre imagenes 2D. EMI
@@ -226,13 +224,6 @@ docker-compose -f ".\src\preprocessing.yaml" down
 
 - Requerimientos de usuarios para subir el video, calidad, tiempo, etc - Emma
 
-- Preguntar macario de arquitectos. (PIPE) Luego mostrarle al rodolfo en revision.
-- Arquitectos:   de a 5 personas mas o menos para saber su opinion o encuestas binarias
-
-- Comparativa de todos los modelos utilizados, el porque y como se quedan en la aplicacion final
-
-
-
 Checeo de hiperparametros
 - Hiperparametros para MAT                 - Justificar en documento - Emi
 - Hiperparametros para GaussianSplatting   - Justificar en documento - Pipe
@@ -240,6 +231,13 @@ Checeo de hiperparametros
 
     (Con grid search y evaluar con criterio)  VIDEO Q YA FUNCIONO
 - Evaluacion matematica como agarramos los mejores modelos para nuestra aplicacion x etapa.  
+
+
+- Arquitectos:   de a 5 personas mas o menos para saber su opinion o encuestas binarias
+
+- Comparativa de todos los modelos utilizados, el porque y como se quedan en la aplicacion final
+
+
 
 - documentar primera prueba con el video del EMI (Un cuarto una silla.)
 - Final documentar con el video del cuarto (Mesa, cama, lampara)
@@ -268,8 +266,10 @@ Presentar los objetivos generales y particulares
 - Unir mismas mascaras en una imagen  / unir todas las mascaras para hacer el inapinting OSCAR  (Listo)
 - Conectar los botones de las pantallas con EMA y PIPE   -  Viernes
 - Contenedor de MAT y script de inpainting con MAT   OSACR Y PIPE  Manana en la tarde 4🕥
+- Preguntar macario de arquitectos. (PIPE) Luego mostrarle al rodolfo en revision.
+- Contactar sinodales / seguimiento   PIPE
 
-
+- 
 ## YANO
 - Stable diffusion hiperparametros OSCAR  YANO
 - tener un minimo de imagenes en mascaras por sino eliminar el objetoc  / EMI YANO
