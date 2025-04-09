@@ -209,42 +209,46 @@ docker-compose -f ".\src\preprocessing.yaml" down
 
 ## Trabajo a futuro
 
-- UI pantallas faltantes  - EMA
+- UI pantallas faltantes (Solo falta editar y visualizar) emma
+
+- Empezar a ver como hacer el .exe de la aplicacion.
   
 - Meter Kmeans / Morfologia     EMI
 
 - Daniel justificar porq modelos tradicionales vs DNN   EMI
 - Meter Gaussian EMI
 
-- Comando de visualizacion trata de jalarlo a la misma UI EMA
 
 - La edicion de color sobre imagenes 2D. EMI
 
 - Probar nuevo video del cuarto.  (Lunes)
 
-- Requerimientos de usuarios para subir el video, calidad, tiempo, etc - Emma
+- Subir videos de objetos/cuartos. EMI
+
+- Requerimientos de usuarios para subir el video, calidad, tiempo, velocidad - Doc - Emma
 
 Checeo de hiperparametros
-- Hiperparametros para MAT                 - Justificar en documento - Emi
-- Hiperparametros para GaussianSplatting   - Justificar en documento - Pipe
-- Hiperparanetris par Yolov8               - Justificar en documento - Oscar
 
+
+                                                 
+- Hiperparametros para MAT/stablediff -> tamano del modelo / agregar uno sin IA.   - Justificar en documento - Emi
+- Hiperparametros para GaussianSplatting / NerF   - Justificar en documento - Pipe
+- Hiperparanetris par Yolov8-m/yolo11 chixlm               - Justificar en documento - Oscar
     (Con grid search y evaluar con criterio)  VIDEO Q YA FUNCIONO
-- Evaluacion matematica como agarramos los mejores modelos para nuestra aplicacion x etapa.  
+  &
+- Evaluacion matematica como agarramos los mejores modelos para nuestra aplicacion x etapa.   / Comparativa de todos los modelos utilizados, el porque y como se quedan en la aplicacion final
 
+- Probar los videos con los objetos. TODOS
 
+- Hacer encuesta de usuarios (Forms).
 - Arquitectos:   de a 5 personas mas o menos para saber su opinion o encuestas binarias
 
-- Comparativa de todos los modelos utilizados, el porque y como se quedan en la aplicacion final
 
 
 
 - documentar primera prueba con el video del EMI (Un cuarto una silla.)
 - Final documentar con el video del cuarto (Mesa, cama, lampara)
 
-
-- Explicarle RR sobre las redes neuronales.
-- Hacer juntas con sinodales
 
 ### Para la presentacion de TT
 - Titulo
