@@ -207,49 +207,52 @@ docker-compose -f ".\src\preprocessing.yaml" down
 
 ---
 
-## Trabajo a futuro
+## Trabajo a futuro   Terminar todo 30 abril.
 
 - UI pantallas faltantes (Solo falta editar y visualizar) emma
+- Codigo de Segmentacion. Oscar y Pipe
+    Eliminar objetos con pocas imagenes al final
+    Arreglar las mascaras para sumarlas con varios objetos en una img
 
-- Empezar a ver como hacer el .exe de la aplicacion.
+  
+- Empezar a ver como hacer el .exe de la aplicacion.  Emma investiga
   
 - Meter Kmeans / Morfologia     EMI
 
 - Daniel justificar porq modelos tradicionales vs DNN   EMI
-- Meter Gaussian EMI
-
+- Meter Gaussian  PIPE
 
 - La edicion de color sobre imagenes 2D. EMI
 
-- Probar nuevo video del cuarto.  (Lunes)
-
-- Subir videos de objetos/cuartos. EMI
+- Probar nuevo video del cuarto.  (Lunes)  al viernes.
+- Subir videos de objetos/cuartos. 
 
 - Requerimientos de usuarios para subir el video, calidad, tiempo, velocidad - Doc - Emma
 
 Checeo de hiperparametros
+                                     
+- Hiperparametros para MAT -> tamano del modelo / agregar uno sin IA.   - Justificar en documento - Emi
 
-
-                                                 
-- Hiperparametros para MAT/stablediff -> tamano del modelo / agregar uno sin IA.   - Justificar en documento - Emi
-- Hiperparametros para GaussianSplatting / NerF   - Justificar en documento - Pipe
 - Hiperparanetris par Yolov8-m/yolo11 chixlm               - Justificar en documento - Oscar
     (Con grid search y evaluar con criterio)  VIDEO Q YA FUNCIONO
   &
 - Evaluacion matematica como agarramos los mejores modelos para nuestra aplicacion x etapa.   / Comparativa de todos los modelos utilizados, el porque y como se quedan en la aplicacion final
 
-- Probar los videos con los objetos. TODOS
 
-- Hacer encuesta de usuarios (Forms).
+
+- Hacer encuesta de satisfaccion usuarios (Forms de google).   El 1 de mayo empezamos con las encuestas  - pipe
+- 
 - Arquitectos:   de a 5 personas mas o menos para saber su opinion o encuestas binarias
 
+- Probar los videos con los objetos. TODOS  Emepezando el viernes en adelante
+
+
+- documentar primera prueba con el video del EMI (Un cuarto una silla.) - Oscar
+- Final documentar con el video del cuarto (Mesa, cama, lampara) -  Volver a intentar y definir escenas para TT.
 
 
 
-- documentar primera prueba con el video del EMI (Un cuarto una silla.)
-- Final documentar con el video del cuarto (Mesa, cama, lampara)
-
-
+- Documentar que pruebas hacer. por si queda tiempo.
 ### Para la presentacion de TT
 - Titulo
 - Pequena introduccion de la importancia de porque exploramos este problema, (la MOTIVACION)
@@ -272,7 +275,7 @@ Presentar los objetivos generales y particulares
 - Contenedor de MAT y script de inpainting con MAT   OSACR Y PIPE  Manana en la tarde 4🕥
 - Preguntar macario de arquitectos. (PIPE) Luego mostrarle al rodolfo en revision.
 - Contactar sinodales / seguimiento   PIPE
-
+- Hiperparametros para GaussianSplatting / NerF   - Justificar en documento - Pipe
 - 
 ## YANO
 - Stable diffusion hiperparametros OSCAR  YANO
