@@ -207,34 +207,36 @@ docker-compose -f ".\src\preprocessing.yaml" down
 
 ---
 
-## Trabajo a futuro   Terminar todo 30 abril.
+## Trabajo a futuro   Sprint al sabado.
 
 - UI pantallas faltantes (Solo falta editar y visualizar) emma
-- Codigo de Segmentacion. Oscar y Pipe
-    Eliminar objetos con pocas imagenes al final
-    Arreglar las mascaras para sumarlas con varios objetos en una img
 
-  
+
+
 - Empezar a ver como hacer el .exe de la aplicacion.  Emma investiga
   
 - Meter Kmeans / Morfologia     EMI
 
-- Daniel justificar porq modelos tradicionales vs DNN   EMI
+- Daniel justificar porq modelos tradicionales vs DNN   SEGMENTACION Oscar
+- Daniel justificar porq modelos tradicionales vs DNN   INPAINTING prueba hacer el finde Yop
 - Meter Gaussian  PIPE
+- 
+- Agregar a la documentacion lo de la edision EMI
 
-- La edicion de color sobre imagenes 2D. EMI
 
-- Probar nuevo video del cuarto.  (Lunes)  al viernes.
-- Subir videos de objetos/cuartos. 
+- Subir videos de objetos/cuartos.   TODOS
+  Probar nuevoS videoS del cuarto.  (Lunes)  al viernes
+- Checar videos de escenas Emi
+- Checar resultados de objetos Yop
 
 - Requerimientos de usuarios para subir el video, calidad, tiempo, velocidad - Doc - Emma
 
 Checeo de hiperparametros
                                      
-- Hiperparametros para MAT -> tamano del modelo / agregar uno sin IA.   - Justificar en documento - Emi
+- Hiperparametros para MAT -> tamano del modelo / agregar uno sin IA.   - Justificar en documento - Emi - 
 
-- Hiperparanetris par Yolov8-m/yolo11 chixlm               - Justificar en documento - Oscar
-    (Con grid search y evaluar con criterio)  VIDEO Q YA FUNCIONO
+- Hiperparanetris par Yolov8-m/yolo11 chixlm               - Justificar en documento - Oscar   -> Problemas para obtener metricas.
+    (Con grid search y evaluar con criterio)  VIDEO Q YA FUNCIONO   Documentar metricas mejor, y los umbrales y lo q se pueda
   &
 - Evaluacion matematica como agarramos los mejores modelos para nuestra aplicacion x etapa.   / Comparativa de todos los modelos utilizados, el porque y como se quedan en la aplicacion final
 
@@ -248,8 +250,11 @@ Checeo de hiperparametros
 
 
 - documentar primera prueba con el video del EMI (Un cuarto una silla.) - Oscar
+
+
 - Final documentar con el video del cuarto (Mesa, cama, lampara) -  Volver a intentar y definir escenas para TT.
 
+- 
 
 
 - Documentar que pruebas hacer. por si queda tiempo.
@@ -276,7 +281,10 @@ Presentar los objetivos generales y particulares
 - Preguntar macario de arquitectos. (PIPE) Luego mostrarle al rodolfo en revision.
 - Contactar sinodales / seguimiento   PIPE
 - Hiperparametros para GaussianSplatting / NerF   - Justificar en documento - Pipe
-- 
+- La edicion de color sobre imagenes 2D. EMI
+- - Codigo de Segmentacion. Oscar y Pipe
+    Eliminar objetos con pocas imagenes al final
+    Arreglar las mascaras para sumarlas con varios objetos en una img
 ## YANO
 - Stable diffusion hiperparametros OSCAR  YANO
 - tener un minimo de imagenes en mascaras por sino eliminar el objetoc  / EMI YANO
