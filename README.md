@@ -257,7 +257,11 @@ Checeo de hiperparametros
 - 
 
 
-- Documentar que pruebas hacer. por si queda tiempo.
+- Pruebas de aceptacion. oscar
+- Resultados de los formularios. Emi
+- Hacer diapositiva - Todos. Pedi a macario unos ejemplos
+
+- 
 ### Para la presentacion de TT
 - Titulo
 - Pequena introduccion de la importancia de porque exploramos este problema, (la MOTIVACION)
