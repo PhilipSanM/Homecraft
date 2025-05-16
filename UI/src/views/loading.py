@@ -7,33 +7,47 @@ class CommandExecutor(ft.Container):
     def __init__(self, page):
         super().__init__()
         self.page = page
-
-        # Elementos visuales
-        self.text_message = ft.Text("Preparando...", size=24,color="black")
-        self.progress = ft.ProgressRing(width=50, height=50, stroke_width=5, color="#3A4E7A")
-
-        # Controles internos posicionados por coordenadas
-        self.text_container = ft.Container(
-            content=self.text_message,
-            left=100,
-            top=100
-        )
-
-        self.progress_container = ft.Container(
-            content=self.progress,
-            left=100,
-            top=150
-        )
-
-        # Agrega los controles como parte del Stack de este Container
-        self.content = ft.Stack(
-            controls=[self.text_container, self.progress_container]
-        )
-
+        
         self.width = 1920
         self.height = 1080
         self.bgcolor = None
         self.padding = 0
+
+        # Elementos visuales
+        self.text_message = ft.Text("Preparando...", size=32,color="white")
+        self.progress = ft.ProgressRing(width=75, height=75, stroke_width=5, color="#1A1A1A")
+
+        # Controles internos posicionados por coordenadas
+        self.cont = ft.Container(
+            content=ft.Column(
+                [
+                    self.text_message,
+                    self.progress
+                ],
+                spacing=10,
+                alignment=ft.MainAxisAlignment.CENTER,
+                horizontal_alignment=ft.CrossAxisAlignment.CENTER
+            ),
+            bgcolor="#3A4E7A",
+            padding=ft.Padding(left=30, right=30, top=10, bottom=50),
+            border_radius=45,
+            margin= ft.margin.only(top=-250)
+        )
+
+        # Contenedor que se centra vertical y horizontalmente
+        self.content = ft.Column(
+            [
+                ft.Container(
+                    content=self.cont,
+                    alignment=ft.alignment.center
+                )
+            ],
+            expand=True,
+            alignment=ft.MainAxisAlignment.CENTER,
+            horizontal_alignment=ft.CrossAxisAlignment.CENTER
+        )
+
+
 
         # Ejecutar comandos en segundo plano
         self.page.run_task(self.run_commands)
@@ -52,13 +66,13 @@ class CommandExecutor(ft.Container):
         if correct_extension is None:
             self.set_message("No se encontró un archivo de video.")
             return
-
+        """
         preprocessing_commands = [
             "docker-compose -f ./src/preprocessing.yaml up -d",
             f'docker exec -it nerfstudio_container bash -c "ns-process-data video --data nerfstudio/room{correct_extension} --output-dir ./nerfstudio/processed_room"',
             "docker-compose -f ./src/preprocessing.yaml down"
         ]
-        print("hola")
+        #print("hola")
         segmentation_commands = [
             "docker-compose -f ./src/segmentation.yaml up -d",
             "docker exec -it yolo_container bash -c \"python ../YOLOv/scripts/segmentation.py\"",
@@ -74,7 +88,7 @@ class CommandExecutor(ft.Container):
             "docker exec -it yolo_container bash -c \"python ../YOLOv/scripts/postprocess.py\"",
             "docker-compose -f ./src/segmentation.yaml down"
         ]
-
+        
         # Ejecutar y actualizar mensajes
         await self.run_command_list(preprocessing_commands)
         self.set_message("Preprocesamiento completado...")
@@ -87,20 +101,8 @@ class CommandExecutor(ft.Container):
 
         await self.run_command_list(post_processing_commands)
         self.set_message("Post-procesamiento listo!")
-
-        # Agregar botón para ir al menú
-        btn_ir_menu = ft.ElevatedButton(
-            "Ir a menú",
-            on_click=lambda e: self.page.go("/menu"),
-            bgcolor="#3A4E7A",
-            color="white",
-            style=ft.ButtonStyle(shape=ft.RoundedRectangleBorder(radius=20), text_style=ft.TextStyle(size=24))
-        )
-
-        # Agrega el botón en una posición específica
-        boton_container = ft.Container(content=btn_ir_menu, left=100, top=220)
-        self.content.controls.append(boton_container)
-        self.update()
+        """
+        self.page.go("/menu")
 
     def set_message(self, msg):
         self.text_message.value = msg
@@ -125,7 +127,6 @@ class CommandExecutor(ft.Container):
         await process.wait()
 
 def loading_view(page, appbar):
-    """Pantalla de carga con ejecución de procesos"""
     page.title = "HomeCraft - Cargando..."
     page.update()
 
@@ -136,9 +137,9 @@ def loading_view(page, appbar):
     imagen_f1 = ft.Image(src='images/figuraD2.png', width=150, height=150, fit=ft.ImageFit.CONTAIN)
     imagen_f2 = ft.Image(src='images/figuraD.png', width=150, height=150, fit=ft.ImageFit.CONTAIN)
 
-    contIMG_c = ft.Container(imagen_cubo, left=751, top=130 - toolbar_h, rotate=ft.transform.Rotate(-0.3))
-    contIMG_f1 = ft.Container(imagen_f1, left=1713, top=800 - toolbar_h, rotate=ft.transform.Rotate(-0.6))
-    contIMG_f2 = ft.Container(imagen_f2, left=122, top=676 - toolbar_h, rotate=ft.transform.Rotate(-0.4))
+    contIMG_c = ft.Container(imagen_cubo, left=751, top=130 - toolbar_h, rotate=ft.Rotate(-0.3))
+    contIMG_f1 = ft.Container(imagen_f1, left=1713, top=800 - toolbar_h, rotate=ft.Rotate(-0.6))
+    contIMG_f2 = ft.Container(imagen_f2, left=122, top=676 - toolbar_h, rotate=ft.Rotate(-0.4))
 
     # Agregar el ejecutor de comandos
     command_executor = CommandExecutor(page)
