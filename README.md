@@ -210,17 +210,16 @@ docker-compose -f ".\src\preprocessing.yaml" down
 ## Trabajo a futuro   Sprint al sabado.
 
 - UI pantallas faltantes (Solo falta editar y visualizar) emma
-
-
-
-- Empezar a ver como hacer el .exe de la aplicacion.  Emma investiga
+- Empezar a ver como hacer el .exe de la aplicacion.  Emma investiga y tema 'Generación de aplicación.' Del documento 
   
 - Meter Kmeans / Morfologia     EMI
+- tema 'Resultados de formularios' - Emi
+- 
 
 - Daniel justificar porq modelos tradicionales vs DNN   SEGMENTACION Oscar
 - Daniel justificar porq modelos tradicionales vs DNN   INPAINTING prueba hacer el finde Yop
-- Meter Gaussian  PIPE
-- 
+- Meter Gaussian  Emi help ya no me doy el tiempo de acabarlo, para hacer los otros temas y grabar videos ;(
+
 - Agregar a la documentacion lo de la edision EMI
 
 
