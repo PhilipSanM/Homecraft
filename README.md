@@ -210,7 +210,8 @@ docker-compose -f ".\src\preprocessing.yaml" down
 ## Trabajo a futuro   Sprint al sabado.
 
 - UI pantallas faltantes (Solo falta editar y visualizar) emma
-- Empezar a ver como hacer el .exe de la aplicacion.  Emma investiga y tema 'Generación de aplicación.' Del documento 
+- Empezar a ver como hacer el .exe de la aplicacion.  Emma investiga y tema 'Generación de aplicación.' Del documento
+- Documentar Requerimientos del video inicial Emma owo
   
 - Meter Kmeans / Morfologia     EMI
 - tema 'Resultados de formularios' - Emi
