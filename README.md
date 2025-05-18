@@ -233,7 +233,7 @@ docker-compose -f ".\src\preprocessing.yaml" down
 
 Checeo de hiperparametros
                                      
-- Hiperparametros para MAT -> tamano del modelo / agregar uno sin IA.   - Justificar en documento - Emi - 
+- Hiperparametros para MAT -> tamano del modelo / agregar uno sin IA.   - Justificar en documento - Emaa
 
 - Hiperparanetris par Yolov8-m/yolo11 chixlm               - Justificar en documento - Oscar   -> Problemas para obtener metricas.
     (Con grid search y evaluar con criterio)  VIDEO Q YA FUNCIONO   Documentar metricas mejor, y los umbrales y lo q se pueda
@@ -242,7 +242,7 @@ Checeo de hiperparametros
 
 
 
-- Hacer encuesta de satisfaccion usuarios (Forms de google).   El 1 de mayo empezamos con las encuestas  - pipe
+
 - 
 - Arquitectos:   de a 5 personas mas o menos para saber su opinion o encuestas binarias
 
@@ -289,6 +289,7 @@ Presentar los objetivos generales y particulares
 - - Codigo de Segmentacion. Oscar y Pipe
     Eliminar objetos con pocas imagenes al final
     Arreglar las mascaras para sumarlas con varios objetos en una img
+- Hacer encuesta de satisfaccion usuarios (Forms de google).   El 1 de mayo empezamos con las encuestas  - pipe
 ## YANO
 - Stable diffusion hiperparametros OSCAR  YANO
 - tener un minimo de imagenes en mascaras por sino eliminar el objetoc  / EMI YANO
