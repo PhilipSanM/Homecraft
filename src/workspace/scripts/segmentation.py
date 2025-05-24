@@ -28,7 +28,7 @@ from sklearn.decomposition import PCA
 import time
 
 # CONSTANTS
-YOLO_MODEL = 'yolov8m-seg'
+YOLO_MODEL = 'yolov8x-seg'
 
 
 # Workspace from nerfstudio
@@ -41,6 +41,7 @@ MASK_FOLDER = '../YOLOv/mask_room/'
 
 # objects folder
 OBJECTS_FOLDER = '../YOLOv/objects/'
+BACKGROUND_FOLDER = "../YOLOv/objects/background/"
 
 # Unkonwn maks folder
 UNKNOWN_FOLDER = "../YOLOv/mask_room/unknown/images/"
@@ -149,7 +150,7 @@ def replace_masks_with_filled_bbox(unknown_folder):
 #     cv2.imwrite(mask_img_path, object_mask.cpu().numpy())
 
         
-def get_mask_from_inference(result, mask_img_path, img_folder, number, conf_threshold=0.7, unknown_folder = UNKNOWN_FOLDER):
+def get_mask_from_inference(result, mask_img_path, img_folder, number, conf_threshold=0.63, unknown_folder = UNKNOWN_FOLDER):
     # Crear carpeta si no existe
     if not os.path.exists(img_folder):
         os.makedirs(img_folder)
@@ -220,6 +221,9 @@ def extract_mask_features(mask):
         cnt = contours[0]
         features["area"] = cv2.countNonZero(mask)
         features["perimeter"] = cv2.arcLength(cnt, True)
+        # number of holes
+        features["holes"] = cv2.isContourConvex(cnt)
+        features["circularity"] = (4 * np.pi * features["area"]) / (features["perimeter"] ** 2) if features["perimeter"] > 0 else 0
         x, y, w, h = cv2.boundingRect(cnt)
         features["bounding_box_ratio"] = w / h if h > 0 else 0
         M = cv2.moments(cnt)
@@ -273,7 +277,7 @@ def process_folder(folder):
         
     return np.array(data), labels
 
-def clasify_unknown(known_class, unknown_class, threshold=0.85):
+def clasify_unknown(known_class, unknown_class, threshold=0.80):
     # Procesar todas las imágenes en carpetas conocidas
     known_data, known_labels = process_folder(known_class)  # Carpeta con imágenes ya clasificadas
     unknown_data, _ = process_folder(unknown_class)  # Imágenes sin clase
@@ -349,63 +353,81 @@ def resize_images_in_folder(folder, output_folder, size=(512, 512)):
 
         #print(f"Resized image saved as {output_path}")
 
+def binarize_and_invert(image_path, threshold=128):
+    """
+    Convierte la imagen en blanco y negro (0 y 255) e invierte los colores.
+    """
+    image = Image.open(image_path).convert("L")  # Convertir a escala de grises
+    img_array = np.array(image)
+    img_array = np.where(img_array > threshold, 255, 0)  # Binarizar
+    img_array = 255 - img_array  # Invertir
+    return Image.fromarray(img_array.astype(np.uint8))
+
+def sum_masks(mask1, mask2):
+
+ # Convertir a arrays NumPy
+    arr1 = np.array(mask1)
+    arr2 = np.array(mask2)
+
+    # Asegurar mismo tamaño: redimensionar arr2 si hace falta
+    if arr1.shape != arr2.shape:
+        arr2 = np.array(
+            Image.fromarray(arr2)
+                 .resize(arr1.shape[::-1], Image.NEAREST)
+        )
+
+    # Donde mask2 sea 0, forzamos 0 en mask1
+    arr1[arr2 == 0] = 0
+
+    # Convertir de nuevo a PIL Image en modo 'L'
+    return Image.fromarray(arr1.astype(np.uint8))
+
+
 def image_move():
+    masks_folder = os.path.join(MASK_FOLDER, "masks", "images")
+    os.makedirs(masks_folder, exist_ok=True)  # Crear la carpeta si no existe
 
-    masks_folder = os.path.join(MASK_FOLDER, "masks")
-
-    # Crear la carpeta masks si no existe
-    os.makedirs(masks_folder, exist_ok=True)
-    masks_folder = masks_folder + '/' + 'images/'
-    os.makedirs(masks_folder, exist_ok=True)
-
-
-
-    # Recorrer las imágenes en mask_room
+    # Recorrer todas las imágenes en las carpetas de clases
     for class_name in os.listdir(MASK_FOLDER):
         if class_name == "masks":
-            continue
-        class_path = os.path.join(MASK_FOLDER, class_name)+ '/images/'
-        # Recorrer las imágenes en la carpeta de la clase
+            continue  # Omitir la carpeta de masks
+
+        class_path = os.path.join(MASK_FOLDER, class_name, "images")
         for filename in os.listdir(class_path):
-
             file_path = os.path.join(class_path, filename)
-            def binarize_and_invert(image_path, output_path, threshold=128):
-                """
-                1. Converts the image to black and white (0 and 255).
-                2. Inverts the colors: Black (0) becomes White (255) and vice versa.
-                """
-                # Open image and convert to grayscale
-                image = Image.open(image_path).convert("L")  # Convert to grayscale
 
-                # Convert image to NumPy array for processing
-                img_array = np.array(image)
+            # Obtener máscara invertida
+            inverted_mask = binarize_and_invert(file_path)
 
-                # Apply binarization (Thresholding)
-                img_array = np.where(img_array > threshold, 255, 0)
+            # Ruta de destino en la carpeta de masks
+            mask_dest_path = os.path.join(masks_folder, filename)
+            mask_dest_path = mask_dest_path.split(',')[0] + '.png'
 
-                # Invert colors (0 ↔ 255)
-                img_array = 255 - img_array
+            if os.path.exists(mask_dest_path):
+                print(f"Mask already exists: {mask_dest_path}")
+                # Si ya existe, sumamos las máscaras
+                existing_mask = Image.open(mask_dest_path).convert("L")
+                new_mask = sum_masks(existing_mask, inverted_mask)
+                new_mask.save(mask_dest_path)
+            else:
+                # Si no existe, simplemente guardamos la máscara invertida
+                inverted_mask.save(mask_dest_path)
+    
+# model = YOLO(YOLO_MODEL)
+# img_path = '../YOLOv/frame_00227.png'
+# results = model(img_path, imgsz = (1920, 1920))
+# print("Results: ", results)
+# detected_classes = get_all_classes_obtained(results)
 
-                # Convert array back to an image
-                processed_image = Image.fromarray(img_array.astype(np.uint8))
-
-                # Save the processed image
-                processed_image.save(output_path)
-            binarize_and_invert(file_path, os.path.join(masks_folder, filename))
-            #os.rename(file_path, os.path.join(masks_folder, filename))
-    # Obtener los nombres de archivos en processed_room (sin extensión)
-    processed_files = {f for f in os.listdir(masks_folder) if os.path.isfile(os.path.join(masks_folder, f))}
-    # Recorrer las imágenes procesadas
-    processed_images = PROCESSED_FOLDER + 'images/'
-    if not os.path.exists(IMAGES_COPY):
-            os.makedirs(IMAGES_COPY)
-    copy_tree(processed_images, IMAGES_COPY)
-    for filename in os.listdir(IMAGES_COPY):        
-        #crear una copia de la imagen 
+# print("Detected classes: ", detected_classes)
+# #save the image with the mask
+# for result in results:
+#     for number, name in detected_classes.items():
+#         # If there is any object in image
+#         if result.masks:
+#             mask_img_path = '../YOLOv/mask_room/{name}/mask{number}.png'
+#             get_mask_from_inference(result, mask_img_path, MASK_FOLDER + name + '/', number)
         
-        # elmiminar archivos que no se encuentren en processed_room
-        if filename not in processed_files:
-            os.remove(os.path.join(IMAGES_COPY, filename))
 
 def main():
 
@@ -414,6 +436,10 @@ def main():
         os.system('rm -r ' + OBJECTS_FOLDER)
 
 
+    # deleting folder if exists
+    if os.path.exists(MASK_FOLDER):
+        os.system('rm -r ' + MASK_FOLDER)
+    
     # deleting folder if exists
     if os.path.exists(MASK_FOLDER):
         os.system('rm -r ' + MASK_FOLDER)
@@ -430,6 +456,7 @@ def main():
         
         if not os.path.exists("../YOLOv/mask_room/unknown/"):
             os.makedirs("../YOLOv/mask_room/unknown/")
+            os.makedirs(BACKGROUND_FOLDER)
             os.makedirs("../YOLOv/mask_room/unknown/"+ folder + '/')
 
         # Find all images in the folder
@@ -446,39 +473,55 @@ def main():
             # working with every class obtained
             detected_classes = get_all_classes_obtained(results)
             # Detected classes
-            for result in results:
-                for number, name in detected_classes.items():
-                    # If there is any object in image
-                    if result.masks:
+            i = 0
+            if detected_classes:
+                for result in results:
+                    if i != 0:
+                        print(result.probs)
+                        print("Result: ", result)
+                    
+                    for number, name in detected_classes.items():
+                        # If there is any object in image
+                        if result.masks:
 
-                        IMG_FOLDER = MASK_FOLDER + name + '/' + folder
-                        MASK_IMG_PATH = IMG_FOLDER + '/' + image
+                            IMG_FOLDER = MASK_FOLDER + name + '/' + folder
+                            MASK_IMG_PATH = IMG_FOLDER + '/' + image.split('.')[0] + ',' + str(i) + ',' + '.png'
 
-                        # geting mask from inference
-                        get_mask_from_inference(result, MASK_IMG_PATH, IMG_FOLDER, number)
-                        
+                            # geting mask from inference
+                            get_mask_from_inference(result, MASK_IMG_PATH, IMG_FOLDER, number)
+                            i += 1
+            else:
+                # make a copy of the current image in the background
+                shutil.copy(img_path, BACKGROUND_FOLDER + '/' + image)
+
+
     for class_name in os.listdir(MASK_FOLDER):
-        if len(os.listdir(MASK_FOLDER + class_name + '/' + folder + '/' )) == 0:  
+        if len(os.listdir(MASK_FOLDER + class_name + '/' + folder + '/' )) <= 5:  
             os.system('rm -r ' + MASK_FOLDER + class_name + '/' + folder + '/')
             os.system('rm -r ' + MASK_FOLDER + class_name)
-    clasify_unknown(MASK_FOLDER, UNKNOWN_FOLDER)
+    
     folder = 'images'
     for name in os.listdir(MASK_FOLDER):
         class_path = MASK_FOLDER + name + '/' + folder + '/'
         for image in os.listdir(class_path):
-
+            
             image_path = os.path.join(class_path, image)
             # obtaining just the object
             OBJECT_WITHOUT_BACK_FOLDER = OBJECTS_FOLDER + name + '/' + folder
-            OG_IMAGE_PATH = PROCESSED_FOLDER + folder + '/' + image
+            OG_IMAGE_PATH = PROCESSED_FOLDER + folder + '/' + image.split(',')[0] + '.png'
 
             get_object_from_mask(image_path, OG_IMAGE_PATH, image, OBJECT_WITHOUT_BACK_FOLDER)
 
             # applying dilatation
             make_dilatation_2_image(image_path)
 
-       
-    replace_masks_with_filled_bbox(UNKNOWN_FOLDER)
+    clasify_unknown(MASK_FOLDER, UNKNOWN_FOLDER)
+    
+    if (os.path.exists(UNKNOWN_FOLDER) and os.listdir(UNKNOWN_FOLDER)):
+        replace_masks_with_filled_bbox(UNKNOWN_FOLDER)
+
+    
+
     image_move()
     masks_folder = os.path.join(MASK_FOLDER, "masks")
     masks_folder = masks_folder + '/' + 'images/'
