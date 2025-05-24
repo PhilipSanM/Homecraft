@@ -22,16 +22,16 @@ import time
 start = time.time()
 
 # # objects folder
-# OBJECTS_FOLDER = "../MAT/objects/background/images"
-# MASKS_FOLDER = "../MAT/mask_room/masks/images"
-# PROCESSED_FOLDER = "../MAT/processed_room/"
-# IMAGES_COPY = "../MAT/processed_room/images_copy"
+OBJECTS_FOLDER = "../MAT/objects/background/images"
+MASKS_FOLDER = "../MAT/mask_room/masks/images"
+PROCESSED_FOLDER = "../MAT/processed_room/"
+IMAGES_COPY = "../MAT/processed_room/images_copy"
 
 # objects folder local
-OBJECTS_FOLDER = "../objects/background/"
-MASKS_FOLDER = "../mask_room/masks/images"
-PROCESSED_FOLDER = "../processed_room/"
-IMAGES_COPY = "../processed_room/images_copy"
+# OBJECTS_FOLDER = "../objects/background/"
+# MASKS_FOLDER = "../mask_room/masks/images"
+# PROCESSED_FOLDER = "../processed_room/"
+# IMAGES_COPY = "../processed_room/images_copy"
 
 
 def upscale_images_in_folder(folder, output_folder, size):
