@@ -36,9 +36,9 @@ def home_view(page, appbar):
 
     # Contenedores de imágenes
     cont = ft.Container(imagen_silla, left=210, top=320 - toolbar_h)
-    contIMG_c = ft.Container(imagen_cubo, left=1660, top=220 - toolbar_h, rotate=ft.transform.Rotate(0))
-    contIMG_f1 = ft.Container(imagen_f1, left=1609, top=900 - toolbar_h, rotate=ft.transform.Rotate(0.2))
-    contIMG_f2 = ft.Container(imagen_f2, left=85, top=810 - toolbar_h, rotate=ft.transform.Rotate(0.3))
+    contIMG_c = ft.Container(imagen_cubo, left=1660, top=220 - toolbar_h, rotate=ft.Rotate(0))
+    contIMG_f1 = ft.Container(imagen_f1, left=1609, top=900 - toolbar_h, rotate=ft.Rotate(0.2))
+    contIMG_f2 = ft.Container(imagen_f2, left=85, top=810 - toolbar_h, rotate=ft.Rotate(0.3))
 
     upload_button = ft.ElevatedButton(
         "Subir video", 

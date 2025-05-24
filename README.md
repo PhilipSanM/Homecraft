@@ -207,47 +207,61 @@ docker-compose -f ".\src\preprocessing.yaml" down
 
 ---
 
-## Trabajo a futuro
+## Trabajo a futuro   Sprint al sabado.
 
-- UI pantallas faltantes  - EMA
+- UI pantallas faltantes (Solo falta editar y visualizar) emma
+- Empezar a ver como hacer el .exe de la aplicacion.  Emma investiga y tema 'Generación de aplicación.' Del documento
+- Documentar Requerimientos del video inicial Emma owo
   
 - Meter Kmeans / Morfologia     EMI
+- tema 'Resultados de formularios' - Emi
+- 
 
-- Daniel justificar porq modelos tradicionales vs DNN   EMI
-- Meter Gaussian EMI
+- Daniel justificar porq modelos tradicionales vs DNN   SEGMENTACION Oscar
+- Daniel justificar porq modelos tradicionales vs DNN   INPAINTING prueba hacer el finde Yop
+- Meter Gaussian  Emi help ya no me doy el tiempo de acabarlo, para hacer los otros temas y grabar videos ;(
 
-- Contactar sinodales / seguimiento   PIPE
-
-- Comando de visualizacion trata de jalarlo a la misma UI EMA
-
-- La edicion de color sobre imagenes 2D. EMI
-
-- Probar nuevo video del cuarto.  (Lunes)
-
-- Requerimientos de usuarios para subir el video, calidad, tiempo, etc - Emma
-
-- Preguntar macario de arquitectos. (PIPE) Luego mostrarle al rodolfo en revision.
-- Arquitectos:   de a 5 personas mas o menos para saber su opinion o encuestas binarias
-
-- Comparativa de todos los modelos utilizados, el porque y como se quedan en la aplicacion final
+- Agregar a la documentacion lo de la edision EMI
 
 
+- Subir videos de objetos/cuartos.   TODOS
+  Probar nuevoS videoS del cuarto.  (Lunes)  al viernes
+- Checar videos de escenas Emi
+- Checar resultados de objetos Yop
+
+- Requerimientos de usuarios para subir el video, calidad, tiempo, velocidad - Doc - Emma
 
 Checeo de hiperparametros
-- Hiperparametros para MAT                 - Justificar en documento - Emi
-- Hiperparametros para GaussianSplatting   - Justificar en documento - Pipe
-- Hiperparanetris par Yolov8               - Justificar en documento - Oscar
+                                     
+- Hiperparametros para MAT -> tamano del modelo / agregar uno sin IA.   - Justificar en documento - Emaa
 
-    (Con grid search y evaluar con criterio)  VIDEO Q YA FUNCIONO
-- Evaluacion matematica como agarramos los mejores modelos para nuestra aplicacion x etapa.  
-
-- documentar primera prueba con el video del EMI (Un cuarto una silla.)
-- Final documentar con el video del cuarto (Mesa, cama, lampara)
+- Hiperparanetris par Yolov8-m/yolo11 chixlm               - Justificar en documento - Oscar   -> Problemas para obtener metricas.
+    (Con grid search y evaluar con criterio)  VIDEO Q YA FUNCIONO   Documentar metricas mejor, y los umbrales y lo q se pueda
+  &
+- Evaluacion matematica como agarramos los mejores modelos para nuestra aplicacion x etapa.   / Comparativa de todos los modelos utilizados, el porque y como se quedan en la aplicacion final
 
 
-- Explicarle RR sobre las redes neuronales.
-- Hacer juntas con sinodales
 
+
+- 
+- Arquitectos:   de a 5 personas mas o menos para saber su opinion o encuestas binarias
+
+- Probar los videos con los objetos. TODOS  Emepezando el viernes en adelante
+
+
+- documentar primera prueba con el video del EMI (Un cuarto una silla.) - Oscar
+
+
+- Final documentar con el video del cuarto (Mesa, cama, lampara) -  Volver a intentar y definir escenas para TT.
+
+- 
+
+
+- Pruebas de aceptacion. oscar
+- Resultados de los formularios. Emi
+- Hacer diapositiva - Todos. Pedi a macario unos ejemplos
+
+- 
 ### Para la presentacion de TT
 - Titulo
 - Pequena introduccion de la importancia de porque exploramos este problema, (la MOTIVACION)
@@ -268,8 +282,14 @@ Presentar los objetivos generales y particulares
 - Unir mismas mascaras en una imagen  / unir todas las mascaras para hacer el inapinting OSCAR  (Listo)
 - Conectar los botones de las pantallas con EMA y PIPE   -  Viernes
 - Contenedor de MAT y script de inpainting con MAT   OSACR Y PIPE  Manana en la tarde 4🕥
-
-
+- Preguntar macario de arquitectos. (PIPE) Luego mostrarle al rodolfo en revision.
+- Contactar sinodales / seguimiento   PIPE
+- Hiperparametros para GaussianSplatting / NerF   - Justificar en documento - Pipe
+- La edicion de color sobre imagenes 2D. EMI
+- - Codigo de Segmentacion. Oscar y Pipe
+    Eliminar objetos con pocas imagenes al final
+    Arreglar las mascaras para sumarlas con varios objetos en una img
+- Hacer encuesta de satisfaccion usuarios (Forms de google).   El 1 de mayo empezamos con las encuestas  - pipe
 ## YANO
 - Stable diffusion hiperparametros OSCAR  YANO
 - tener un minimo de imagenes en mascaras por sino eliminar el objetoc  / EMI YANO
