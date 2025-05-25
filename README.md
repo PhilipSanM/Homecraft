@@ -217,7 +217,7 @@ docker-compose -f ".\src\preprocessing.yaml" down
 - tema 'Resultados de formularios' - Emi
 - 
 
-- Daniel justificar porq modelos tradicionales vs DNN   SEGMENTACION Oscar
+
 - Meter Gaussian  Emi help ya no me doy el tiempo de acabarlo, para hacer los otros temas y grabar videos ;(
 
 - Agregar a la documentacion lo de la edision EMI
@@ -234,8 +234,7 @@ Checeo de hiperparametros
                                      
 - Hiperparametros para MAT -> tamano del modelo / agregar uno sin IA.   - Justificar en documento - Emaa
 
-- Hiperparanetris par Yolov8-m/yolo11 chixlm               - Justificar en documento - Oscar   -> Problemas para obtener metricas.
-    (Con grid search y evaluar con criterio)  VIDEO Q YA FUNCIONO   Documentar metricas mejor, y los umbrales y lo q se pueda
+
   &
 - Evaluacion matematica como agarramos los mejores modelos para nuestra aplicacion x etapa.   / Comparativa de todos los modelos utilizados, el porque y como se quedan en la aplicacion final
 
@@ -247,16 +246,8 @@ Checeo de hiperparametros
 
 - Probar los videos con los objetos. TODOS  Emepezando el viernes en adelante
 
-
-- documentar primera prueba con el video del EMI (Un cuarto una silla.) - Oscar
-
-
 - Final documentar con el video del cuarto (Mesa, cama, lampara) -  Volver a intentar y definir escenas para TT.
-
 - 
-
-
-- Pruebas de aceptacion. oscar
 - Resultados de los formularios. Emi
 - Hacer diapositiva - Todos. Pedi a macario unos ejemplos
 
@@ -290,6 +281,11 @@ Presentar los objetivos generales y particulares
     Arreglar las mascaras para sumarlas con varios objetos en una img
 - Hacer encuesta de satisfaccion usuarios (Forms de google).   El 1 de mayo empezamos con las encuestas  - pipe
 - - Daniel justificar porq modelos tradicionales vs DNN   INPAINTING prueba hacer el finde Yop
+- Daniel justificar porq modelos tradicionales vs DNN   SEGMENTACION Oscar
+- Hiperparanetris par Yolov8-m/yolo11 chixlm               - Justificar en documento - Oscar   -> Problemas para obtener metricas.
+    (Con grid search y evaluar con criterio)  VIDEO Q YA FUNCIONO   Documentar metricas mejor, y los umbrales y lo q se pueda
+- documentar primera prueba con el video del EMI (Un cuarto una silla.) - Oscar
+- Pruebas de aceptacion. oscar
 ## YANO
 - Stable diffusion hiperparametros OSCAR  YANO
 - tener un minimo de imagenes en mascaras por sino eliminar el objetoc  / EMI YANO
