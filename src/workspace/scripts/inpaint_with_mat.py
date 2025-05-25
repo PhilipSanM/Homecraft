@@ -61,20 +61,20 @@ def main():
             os.remove(os.path.join(IMAGES_COPY, filename))   
     upscale_images_in_folder(IMAGES_COPY, IMAGES_COPY, size=(512, 512))
     # Definir el comando como una lista
-    # command = [
-    #     "python", "../MAT/MAT/generate_image.py",
-    #     "--network", "../MAT/MAT/pretrained/Places_512_FullData.pkl",
-    #     "--dpath", "../MAT/processed_room/images_copy",
-    #     "--mpath", "../MAT/mask_room/masks/images",
-    #     "--outdir", OBJECTS_FOLDER
-    # ]
+     command = [
+         "python", "../MAT/MAT/generate_image.py",
+         "--network", "../MAT/MAT/pretrained/Places_512_FullData.pkl",
+         "--dpath", "../MAT/processed_room/images_copy",
+         "--mpath", "../MAT/mask_room/masks/images",
+         "--outdir", OBJECTS_FOLDER
+     ]
 
     command = [
-        "python", "../MAT/generate_image.py",
-        "--network", "../MAT/pretrained/Places_512_FullData.pkl",
-        "--dpath", "../processed_room/images_copy",
-        "--mpath", "../mask_room/masks/images",
-        "--outdir", OBJECTS_FOLDER
+    #    "python", "../MAT/generate_image.py",
+    #    "--network", "../MAT/pretrained/Places_512_FullData.pkl",
+    #   "--dpath", "../processed_room/images_copy",
+    #    "--mpath", "../mask_room/masks/images",
+    #    "--outdir", OBJECTS_FOLDER
     ]
 
     # 
