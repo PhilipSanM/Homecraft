@@ -69,13 +69,13 @@ def main():
          "--outdir", OBJECTS_FOLDER
      ]
 
-    command = [
+    #command = [
     #    "python", "../MAT/generate_image.py",
     #    "--network", "../MAT/pretrained/Places_512_FullData.pkl",
     #   "--dpath", "../processed_room/images_copy",
     #    "--mpath", "../mask_room/masks/images",
     #    "--outdir", OBJECTS_FOLDER
-    ]
+    #]
 
     # 
     subprocess.run(command, check=True)
