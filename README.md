@@ -218,7 +218,6 @@ docker-compose -f ".\src\preprocessing.yaml" down
 - 
 
 - Daniel justificar porq modelos tradicionales vs DNN   SEGMENTACION Oscar
-- Daniel justificar porq modelos tradicionales vs DNN   INPAINTING prueba hacer el finde Yop
 - Meter Gaussian  Emi help ya no me doy el tiempo de acabarlo, para hacer los otros temas y grabar videos ;(
 
 - Agregar a la documentacion lo de la edision EMI
@@ -290,6 +289,7 @@ Presentar los objetivos generales y particulares
     Eliminar objetos con pocas imagenes al final
     Arreglar las mascaras para sumarlas con varios objetos en una img
 - Hacer encuesta de satisfaccion usuarios (Forms de google).   El 1 de mayo empezamos con las encuestas  - pipe
+- - Daniel justificar porq modelos tradicionales vs DNN   INPAINTING prueba hacer el finde Yop
 ## YANO
 - Stable diffusion hiperparametros OSCAR  YANO
 - tener un minimo de imagenes en mascaras por sino eliminar el objetoc  / EMI YANO
