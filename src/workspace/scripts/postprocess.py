@@ -94,6 +94,27 @@ def create_dummy_image(size, path, number):
     
     img.save(path + 'frame_' + image_number + '.png')
 
+
+def correct_name(objects):
+
+    for object in objects:
+        # Making a correction in the name of the objects...
+        # frame_00001,0,.png -> frame_00001.png
+        if object == 'background':
+            continue
+
+        object_folder = OBJECTS_FOLDER + object + '/' + 'images/'
+        images = os.listdir(object_folder)
+        for image in images:
+            cur_name = image.split(',')
+            new_name = cur_name[0] + '.png'
+            print('Renaming: ', object_folder + image, ' to: ', object_folder + new_name)
+            os.rename(object_folder + image, object_folder + new_name)
+
+
+        
+
+
 def main():
     
     # working with background
@@ -106,6 +127,10 @@ def main():
     # working with objects
     # print('working with objects')
 
+    # correcting names
+    correct_name(os.listdir(OBJECTS_FOLDER))
+
+
     # getting the last possible image
     last_number = get_last_image_number()
 
@@ -116,6 +141,7 @@ def main():
         
         # Making missing images from 1 to last_number
         OBJECT_IMAGES_FOLDER = OBJECTS_FOLDER + object + '/images/'
+
 
         for i in range(1, last_number + 1):
             # if image exist jump
