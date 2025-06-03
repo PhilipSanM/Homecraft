@@ -210,17 +210,16 @@ docker-compose -f ".\src\preprocessing.yaml" down
 ## Trabajo a futuro   Sprint al sabado.
 
 - UI pantallas faltantes (Solo falta editar y visualizar) emma
-
-
-
-- Empezar a ver como hacer el .exe de la aplicacion.  Emma investiga
+- Empezar a ver como hacer el .exe de la aplicacion.  Emma investiga y tema 'Generación de aplicación.' Del documento
+- Documentar Requerimientos del video inicial Emma owo
   
 - Meter Kmeans / Morfologia     EMI
-
-- Daniel justificar porq modelos tradicionales vs DNN   SEGMENTACION Oscar
-- Daniel justificar porq modelos tradicionales vs DNN   INPAINTING prueba hacer el finde Yop
-- Meter Gaussian  PIPE
+- tema 'Resultados de formularios' - Emi
 - 
+
+
+- Meter Gaussian  Emi help ya no me doy el tiempo de acabarlo, para hacer los otros temas y grabar videos ;(
+
 - Agregar a la documentacion lo de la edision EMI
 
 
@@ -233,31 +232,22 @@ docker-compose -f ".\src\preprocessing.yaml" down
 
 Checeo de hiperparametros
                                      
-- Hiperparametros para MAT -> tamano del modelo / agregar uno sin IA.   - Justificar en documento - Emi - 
+- Hiperparametros para MAT -> tamano del modelo / agregar uno sin IA.   - Justificar en documento - Emaa
 
-- Hiperparanetris par Yolov8-m/yolo11 chixlm               - Justificar en documento - Oscar   -> Problemas para obtener metricas.
-    (Con grid search y evaluar con criterio)  VIDEO Q YA FUNCIONO   Documentar metricas mejor, y los umbrales y lo q se pueda
+
   &
 - Evaluacion matematica como agarramos los mejores modelos para nuestra aplicacion x etapa.   / Comparativa de todos los modelos utilizados, el porque y como se quedan en la aplicacion final
 
 
 
-- Hacer encuesta de satisfaccion usuarios (Forms de google).   El 1 de mayo empezamos con las encuestas  - pipe
+
 - 
 - Arquitectos:   de a 5 personas mas o menos para saber su opinion o encuestas binarias
 
 - Probar los videos con los objetos. TODOS  Emepezando el viernes en adelante
 
-
-- documentar primera prueba con el video del EMI (Un cuarto una silla.) - Oscar
-
-
 - Final documentar con el video del cuarto (Mesa, cama, lampara) -  Volver a intentar y definir escenas para TT.
-
 - 
-
-
-- Pruebas de aceptacion. oscar
 - Resultados de los formularios. Emi
 - Hacer diapositiva - Todos. Pedi a macario unos ejemplos
 
@@ -289,6 +279,13 @@ Presentar los objetivos generales y particulares
 - - Codigo de Segmentacion. Oscar y Pipe
     Eliminar objetos con pocas imagenes al final
     Arreglar las mascaras para sumarlas con varios objetos en una img
+- Hacer encuesta de satisfaccion usuarios (Forms de google).   El 1 de mayo empezamos con las encuestas  - pipe
+- - Daniel justificar porq modelos tradicionales vs DNN   INPAINTING prueba hacer el finde Yop
+- Daniel justificar porq modelos tradicionales vs DNN   SEGMENTACION Oscar
+- Hiperparanetris par Yolov8-m/yolo11 chixlm               - Justificar en documento - Oscar   -> Problemas para obtener metricas.
+    (Con grid search y evaluar con criterio)  VIDEO Q YA FUNCIONO   Documentar metricas mejor, y los umbrales y lo q se pueda
+- documentar primera prueba con el video del EMI (Un cuarto una silla.) - Oscar
+- Pruebas de aceptacion. oscar
 ## YANO
 - Stable diffusion hiperparametros OSCAR  YANO
 - tener un minimo de imagenes en mascaras por sino eliminar el objetoc  / EMI YANO
