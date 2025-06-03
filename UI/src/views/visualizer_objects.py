@@ -1,7 +1,5 @@
 import flet as ft
-import os
 import asyncio
-
 
 class VisualizerExecutor(ft.Container):
     def __init__(self, page, object_name: str):
@@ -10,7 +8,6 @@ class VisualizerExecutor(ft.Container):
         self.object_name = object_name
         self.text_message = ft.Text(f"Visualizando {self.object_name}...", size=32, color="white")
         self.progress = ft.ProgressRing(width=75, height=75, stroke_width=5, color="#1A1A1A")
-
         self.button_open = ft.ElevatedButton(
             text="Abrir Visualizador",
             icon=ft.Icons.OPEN_IN_BROWSER,
@@ -25,9 +22,17 @@ class VisualizerExecutor(ft.Container):
             on_click=self.handle_back,
         )
 
+        self.button_download = ft.ElevatedButton(
+            text="Descargar",
+            icon= ft.Icons.DOWNLOAD,
+            bgcolor="#4B6EAF",
+            color="white",
+            on_click=lambda e: self.page.run_task(self.run_export_command)
+        )
+
         self.cont = ft.Container(
             content=ft.Column(
-                [self.text_message, self.progress, self.button_open, self.button_back],
+                [self.text_message, self.progress, self.button_open, self.button_download, self.button_back],
                 alignment=ft.MainAxisAlignment.CENTER,
                 horizontal_alignment=ft.CrossAxisAlignment.CENTER,
                 spacing=15
@@ -56,12 +61,13 @@ class VisualizerExecutor(ft.Container):
     async def handle_back(self, e):
         await self.shutdown_if_running()
 
-        await asyncio.sleep(0.1)  # Pequeña pausa para asegurar liberación de recursos
         self.page.views.clear()
-        self.page.go("/loadObj")
+        if self.object_name =="background":
+            self.page.go("/menu")
+        else:
+            self.page.go("/loadObj")
 
     async def shutdown_if_running(self):
-        
         check_cmd = 'docker ps --filter "name=nerfstudio_container" --format "{{.Names}}"'
         process = await asyncio.create_subprocess_shell(
             check_cmd,
@@ -95,6 +101,22 @@ class VisualizerExecutor(ft.Container):
             print(chunk.decode().strip())
         await process.wait()
 
+    async def run_export_command(self):
+        try:
+            self.button_download.disabled = True
+            self.page.update()
+
+            self.page.open(ft.SnackBar(ft.Text("Descargando objeto...", color="white"),bgcolor="#4B6EAF", elevation=10))
+
+            export_cmd = f'docker exec -it nerfstudio_container bash -c "python ./nerfstudio/scripts/export.py --object_name {self.object_name}"'
+            await self.run_command(export_cmd)
+            self.page.open(ft.SnackBar(ft.Text("¡Descarga completada!", color="white"),bgcolor="#4CAF50",elevation=10))
+            print("si")
+        except Exception as e:
+            self.page.open(ft.SnackBar(ft.Text(f"Error al descargar: {str(e)}", color="white"),bgcolor="#D32F2F",elevation=10))
+        finally:
+            self.button_download.disabled = False
+            self.page.update()
 
 def visualizer_objects_view(page, appbar, object_name: str):
     page.title = f"HomeCraft - Visualizando {object_name}"
@@ -125,4 +147,4 @@ def visualizer_objects_view(page, appbar, object_name: str):
                 )
             )
         ]
-    ) 
+    )
