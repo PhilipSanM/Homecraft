@@ -35,163 +35,34 @@ Before running HomeCraft, ensure you have the following installed:
 
 Ensure you clone the repository and navigate to its directory:
 ```bash
-git clone https://github.com/your-repo/HomeCraft.git
+git clone https://github.com/PhilipSanM/Homecraft
 cd HomeCraft
 ```
+## Run the app
 
-Remember to add a video to workspace folder
-
+>[!TIP]
+>Create a new virtual environment
 ```bash
-Homecraft/src/workspace/room.mov
-```
----
-
-## 1. Preprocessing
-
-### Step 1: Start the Nerfstudio Container
-Run the following command to start the preprocessing container:
-```bash
-docker-compose -f "./src/preprocessing.yaml" up -d
+python -m venv .venv
 ```
 
-### Step 2: Run the Preprocessing Script
-Execute the following command inside the container to process the video:
+Activate the new environment
 ```bash
-docker exec -it nerfstudio_container bash -c "ns-process-data video --data nerfstudio/room.mov --output-dir ./nerfstudio/processed_room"
+.venv\Scripts\activate
+```
+>[!IMPORTANT]
+>Install all required packages
+```bash
+pip install flet[all]
+pip install opencv-python
+pip install flet-contrib
 ```
 
-### Step 3: Stop and Remove the Nerfstudio Container
-After processing, stop and remove the container:
+Now you can run the application
 ```bash
-docker-compose -f "./src/preprocessing.yaml" down
+flet run -d UI
 ```
 
-## 2. Segmentation
-
-### Step 4: Start the Ultralytics Container
-Run the following command to start the segmentation container:
-```bash
-docker-compose -f "./src/segmentation.yaml" up -d
-```
-
-### Step 5: Run the Segmentation Script
-Execute the segmentation script to generate the mask folder and objects folder:
-```bash
-docker exec -it yolo_container bash -c "python ../YOLOv/scripts/segmentation.py"
-```
-
-### Step 6: Stop and Remove the Ultralytics Container
-After segmentation, stop and remove the container:
-```bash
-docker-compose -f "./src/segmentation.yaml" down
-```
-
-## 3.1. Stable Diffusion Inpainting
-
-### Step 7: Start the Inpainting Container
-Run the following command to start the inpainting container:
-```bash
-docker-compose -f "./src/inpainting.yaml" up -d
-```
-
-### Step 8: Run the Inpainting Script
-Generate images of independent objects with the following command:
-```bash
-docker exec -it SD_container bash -c "python ../SD/scripts/inpainting.py"
-```
-
-### Step 9: Stop and Remove the Inpainting Container
-After inpainting, stop and remove the container:
-```bash
-docker-compose -f "./src/inpainting.yaml" down
-```
-
-
-## 3.2. MAT Inpainting
-
-### Step 7: Start the Inpainting Container
-Run the following command to start the inpainting container:
-```bash
-docker-compose -f "./src/inpainting_mat.yaml" up -d
-```
-
-### Step 8: Run the Inpainting Script
-Generate images of independent objects with the following command:
-```bash
-docker exec -it SD_container bash -c "python ../MAT/scripts/inpaint_with_mat.py"
-```
-
-### Step 9: Stop and Remove the Inpainting Container
-After inpainting, stop and remove the container:
-```bash
-docker-compose -f "./src/inpainting_mat.yaml" down
-```
-
-## 4. Postprocessing
-
-### Step 10: Start the Ultralytics Container
-Run the following command to start the segmentation container:
-```bash
-docker-compose -f "./src/segmentation.yaml" up -d
-```
-
-### Step 11: Run the Segmentation Script
-Execute the postprocessing script to generate the objects for NeRFstudio:
-```bash
-docker exec -it yolo_container bash -c "python ../YOLOv/scripts/postprocess.py"
-```
-
-### Step 12: Stop and Remove the Ultralytics Container
-After segmentation, stop and remove the container:
-```bash
-docker-compose -f "./src/segmentation.yaml" down
-```
-
----
-
-## Visualize Objects
-
-### Step 1: Start the Nerfstudio Container
-Run the following command to start the inpainting container:
-```bash
-docker-compose -f ".\src\preprocessing.yaml" up -d
-```
-
-### Step 2: Run the script
-Generate images of independent objects with the following command:
-```bash
-docker exec -it nerfstudio_container bash -c "ns-train splatfacto --data ./nerfstudio/processed_room --steps_per_save 100"
-```
-
-### Step 3: Stop and Remove the Nerfstudio Container
-After inpainting, stop and remove the container:
-```bash
-docker-compose -f ".\src\preprocessing.yaml" down
-```
-
-
----
-
-## Export Objects
-
-### Step 1: Start the Nerfstudio Container
-Run the following command to start the inpainting container:
-```bash
-docker-compose -f ".\src\preprocessing.yaml" up -d
-```
-
-### Step 2: Run the script
-Export  objects to export folder
-```bash
-docker exec -it nerfstudio_container bash -c "python ./nerfstudio/scripts/export.py --object_name {object_name}"
-```
-
-### Step 3: Stop and Remove the Nerfstudio Container
-After inpainting, stop and remove the container:
-```bash
-docker-compose -f ".\src\preprocessing.yaml" down
-```
----
 
 ## Notes
 - Ensure all required datasets and models are properly placed in the expected directories before running the scripts.
