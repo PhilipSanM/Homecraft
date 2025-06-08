@@ -66,7 +66,7 @@ class CommandExecutor(ft.Container):
         if correct_extension is None:
             self.set_message("No se encontró un archivo de video.")
             return
-        """
+        
         preprocessing_commands = [
             "docker-compose -f ./src/preprocessing.yaml up -d",
             f'docker exec -it nerfstudio_container bash -c "ns-process-data video --data nerfstudio/room{correct_extension} --output-dir ./nerfstudio/processed_room"',
@@ -101,7 +101,7 @@ class CommandExecutor(ft.Container):
 
         await self.run_command_list(post_processing_commands)
         self.set_message("Post-procesamiento listo!")
-        """
+        
         self.page.go("/menu")
 
     def set_message(self, msg):
