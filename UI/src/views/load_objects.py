@@ -45,11 +45,17 @@ def load_objects_view(page: ft.Page, appbar):
                             controls=[
                                 ft.Icon(name=ft.Icons.IMAGE, color="#5E83BA"),
                                 ft.Text(objeto, color="white", expand=True, size=18),
-                                ft.IconButton(
+                                ft.ElevatedButton(
+                                    "Ver",
                                     icon=ft.Icons.PLAY_ARROW,
                                     icon_color="#5E83BA",
-                                    tooltip="Acción futura",
                                     on_click=lambda e, obj=objeto: page.go(f"/visObj?object={obj}")
+                                ),
+                                ft.ElevatedButton(
+                                    "Editar",
+                                    icon=ft.Icons.PALETTE,
+                                    icon_color="#5E83BA",
+                                    on_click= lambda e, obj = objeto: page.go(f"/process_color?object={obj}")
                                 )
                             ],
                             alignment="spaceBetween",

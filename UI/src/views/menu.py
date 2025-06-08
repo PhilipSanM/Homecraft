@@ -20,18 +20,18 @@ def menu_view(page,appbar):
         content=ft.Text("Elija una opción", size=40),
         alignment= ft.alignment.Alignment(-0.9,-0.9),
         width = 817,
-        height = 770,
+        height = 650,
         left = 551,
         top = 235-toolbar_h,
         bgcolor= "#3A4E7A",
         border_radius=45
         )
     textBackG = ft.Text("Visualizar fondo", size=34,width=505, text_align="center")
-    textDownObj = ft.Text("Descargar modelo 3D de un objeto", size=34,width=505, text_align="center")
-    textVisBack = ft.Text("Visualizar objeto 3D específico", size=34,width=505, text_align="center")
-    contBG = ft.Container(content=textBackG, top=369-toolbar_h,left=578)
-    contDO = ft.Container(content=textDownObj, top=551-toolbar_h,left=578)
-    contVB = ft.Container(content=textVisBack, top=773-toolbar_h,left=578)
+    #textDownObj = ft.Text("Descargar modelo 3D de un objeto", size=34,width=505, text_align="center")
+    textVisBack = ft.Text("Visualizar objeto 3D específico", size=34,width=550, text_align="center")
+    contBG = ft.Container(content=textBackG, top=460-toolbar_h,left=578)
+    #contDO = ft.Container(content=textDownObj, top=551-toolbar_h,left=578)
+    contVB = ft.Container(content=textVisBack, top=670-toolbar_h,left=578)
     
     botBackG = ft.ElevatedButton(
         content=ft.Image(src="images/VisBack.png",width=80,height=80),
@@ -41,10 +41,10 @@ def menu_view(page,appbar):
         style=ft.ButtonStyle(
             shape=ft.RoundedRectangleBorder(radius=25),
         ),
-        on_click=lambda e: page.go("/loadBG")
+        on_click=lambda e: page.go(f"/visObj?object=background")
     )
-    conBotBG= ft.Container(content=botBackG, left=1113, top=350-toolbar_h)
-    
+    conBotBG= ft.Container(content=botBackG, left=1113, top=450-toolbar_h)
+    """
     botDown = ft.ElevatedButton(
         content=ft.Image(src="images/Downl.png",width=80,height=85),
         bgcolor="#5E83BA",
@@ -56,7 +56,7 @@ def menu_view(page,appbar):
         on_click=lambda e: page.go("/loadDL")
     )
     conBotDown= ft.Container(content=botDown, left=1113, top=560-toolbar_h)
-    
+    """
     
     botObj = ft.ElevatedButton(
         content=ft.Image(src="images/VisObj.png",width=80,height=80),
@@ -68,13 +68,13 @@ def menu_view(page,appbar):
         ),
         on_click=lambda e: page.go("/loadObj")
     )
-    conBotObj= ft.Container(content=botObj, left=1113, top=770-toolbar_h)
+    conBotObj= ft.Container(content=botObj, left=1113, top=682-toolbar_h)
     
     return ft.View(
         route="/menu",
         bgcolor = "#E5E5E5",
         appbar=appbar,
         controls=[
-            ft.Stack([contIMG_c, contIMG_f1, contIMG_f2,cont_menu,contBG,contDO, contVB, conBotBG,conBotDown,conBotObj])
+            ft.Stack([contIMG_c, contIMG_f1, contIMG_f2,cont_menu,contBG, contVB, conBotBG,conBotObj])
         ]
     )

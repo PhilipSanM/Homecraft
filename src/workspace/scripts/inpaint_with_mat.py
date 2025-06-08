@@ -61,7 +61,7 @@ def main():
             os.remove(os.path.join(IMAGES_COPY, filename))   
     upscale_images_in_folder(IMAGES_COPY, IMAGES_COPY, size=(512, 512))
     # Definir el comando como una lista
-     command = [
+    command = [
          "python", "../MAT/MAT/generate_image.py",
          "--network", "../MAT/MAT/pretrained/Places_512_FullData.pkl",
          "--dpath", "../MAT/processed_room/images_copy",

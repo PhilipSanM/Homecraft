@@ -2,11 +2,9 @@ import flet as ft
 from views.home import home_view
 from views.loading import loading_view
 from views.menu import menu_view
-from views.load_background import load_background_view
 from views.load_objects import load_objects_view
 from views.visualizer_objects import visualizer_objects_view
-from views.load_download import load_download_view
-from views.download import download_executor_view
+from views.edicion import process_color_view
 
 def main(page: ft.Page):
     page.fonts = {
@@ -36,23 +34,20 @@ def main(page: ft.Page):
             page.views.append(loading_view(page, appbar))
         elif route_parts[0] == "/menu":
             page.views.append(menu_view(page, appbar))
-        elif route_parts[0] == "/loadBG":
-            page.views.append(load_background_view(page, appbar))
         elif route_parts[0] == "/loadObj":
             page.views.append(load_objects_view(page, appbar))
-        elif route_parts[0] == "/loadDL":
-            page.views.append(load_download_view(page, appbar))
         elif route_parts[0] == "/visObj":
             object_name = "default_object"
             if len(route_parts) > 1:
                 params = urllib.parse.parse_qs(route_parts[1])
                 object_name = params.get("object", ["default_object"])[0]
             page.views.append(visualizer_objects_view(page, appbar, object_name))
-        elif route_parts[0] == "/download_exec":
-            params = urllib.parse.parse_qs(route_parts[1]) if len(route_parts) > 1 else {}
-            objs = params.get("objs", [""])[0]
-            objetos_lista = objs.split(",") if objs else []
-            page.views.append(download_executor_view(page, appbar, objetos_lista))
+        elif route_parts[0] == "/process_color":
+            object_name = "default_object"
+            if len(route_parts) > 1:
+                params = urllib.parse.parse_qs(route_parts[1])
+                object_name = params.get("object", ["default_object"])[0]
+            page.views.append(process_color_view(page, appbar, object_name))
 
 
         page.update()
