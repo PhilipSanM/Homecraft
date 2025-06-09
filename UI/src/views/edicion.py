@@ -2,6 +2,8 @@ import os
 import flet as ft
 import cv2
 import numpy as np
+import asyncio
+import subprocess
 from flet_contrib.color_picker import ColorPicker
 
 def hex_to_bgr(hex_color):
@@ -58,24 +60,58 @@ def process_images(input_folder, mask_folder, output_folder, target_color):
     return processed_count
 
 
+
+
 def process_color_view(page: ft.Page, appbar, object_name: str):
     page.title = "HomeCraft - Edición"
     page.update()
 
     result_text = ft.Text("")
+    loading_indicator = ft.ProgressRing(width=40, height=40, stroke_width=4, visible=False, color="#1A1A1A")
 
     color_picker = ColorPicker("#3A4E7A")
     cont2 = ft.Container(content=color_picker, bgcolor="#2E4172", padding=10, border_radius=15)
 
-    def confirm_processing(e):
+    process_btn = ft.ElevatedButton(
+        "Iniciar procesamiento", 
+        bgcolor="#5E83BA", 
+        color="white",
+        icon=ft.Icons.FAST_FORWARD_ROUNDED
+    )
+    backButton = ft.ElevatedButton(
+        "Volver",
+        bgcolor="#5E83BA",
+        color="white",
+        on_click=lambda e: page.go("/loadObj"),
+        icon=ft.Icons.ARROW_BACK
+        )
+
+    async def run_command_async(cmd):
+        process = await asyncio.create_subprocess_shell(
+            cmd,
+            stdout=asyncio.subprocess.PIPE,
+            stderr=asyncio.subprocess.PIPE
+        )
+        await process.communicate()
+
+    async def background_processing():
+        process_btn.disabled = True
+        backButton.disabled = True
+        loading_indicator.visible = True
+        result_text.value = "Procesando imágenes..."
+        result_text.color = "black"
+        page.update()
+
         hex_color = color_picker.color
-        print(f"Color seleccionado: {hex_color}")
         try:
             selected_bgr = hex_to_bgr(hex_color)
         except Exception as ex:
             print(f"Error al convertir color: {ex}")
             result_text.value = "❌ Error al procesar el color seleccionado."
             result_text.color = "red"
+            loading_indicator.visible = False
+            process_btn.disabled = False
+            backButton.disabled = False
             page.update()
             return
 
@@ -83,67 +119,66 @@ def process_color_view(page: ft.Page, appbar, object_name: str):
         mask_folder = f"./src/workspace/mask_room/{object_name}/images"
         output_folder = os.path.join(input_folder, "resultados_coloreados")
 
-        count = process_images(input_folder, mask_folder, output_folder, selected_bgr)
-        result_text.value = f"✅ Procesadas {count} imágenes. Resultado en '{output_folder}'"
+        count = await asyncio.to_thread(process_images, input_folder, mask_folder, output_folder, selected_bgr)
+
+        # Comandos Docker
+        docker_commands = [
+            "docker-compose -f ./src/segmentation.yaml up -d",
+            f'docker exec -it yolo_container bash -c "python ../YOLOv/scripts/postprocess_edit.py --object_name {object_name}"',
+            "docker-compose -f ./src/segmentation.yaml down"
+        ]
+        for cmd in docker_commands:
+            await run_command_async(cmd)
+
+        result_text.value = f"✅ Procesadas {count} imágenes y ejecutado postprocesado Docker."
         result_text.color = "green"
+        loading_indicator.visible = False
+        process_btn.disabled = False
+        backButton.disabled = False
         page.update()
 
-    # Imágenes de fondo con baja opacidad
+    def confirm_processing(e):
+        page.run_task(background_processing)
+
+    process_btn.on_click = confirm_processing
+
     background_images = ft.Stack(
         [
             ft.Container(
-                content=ft.Image(
-                    src='images/cubo.png',
-                    width=150,
-                    fit=ft.ImageFit.CONTAIN,
-                    rotate=ft.Rotate(0.0)
-                ),
-                alignment=ft.alignment.top_left,
-                expand=True,
+                content=ft.Image(src='images/cubo.png', width=150, fit=ft.ImageFit.CONTAIN, rotate=ft.Rotate(0.0)),
+                alignment=ft.alignment.top_left, expand=True,
             ),
             ft.Container(
-                content=ft.Image(
-                    src='images/figuraD2.png',
-                    width=150,
-                    fit=ft.ImageFit.CONTAIN,
-                    rotate=ft.Rotate(-0.6),
-                ),
-                alignment=ft.alignment.center_right,
-                expand=True,
+                content=ft.Image(src='images/figuraD2.png', width=150, fit=ft.ImageFit.CONTAIN, rotate=ft.Rotate(-0.6)),
+                alignment=ft.alignment.center_right, expand=True,
             ),
             ft.Container(
-                content=ft.Image(
-                    src='images/figuraD.png',
-                    width=150,
-                    fit=ft.ImageFit.CONTAIN,
-                    rotate=ft.Rotate(-0.3),
-                ),
-                alignment=ft.alignment.bottom_left,
-                expand=True,
+                content=ft.Image(src='images/figuraD.png', width=150, fit=ft.ImageFit.CONTAIN, rotate=ft.Rotate(-0.3)),
+                alignment=ft.alignment.bottom_left, expand=True,
             ),
         ]
     )
 
-    # Contenido principal encima de las imágenes
     foreground_content = ft.Column(
         [
             ft.Text(f"Procesamiento de imágenes para objeto: {object_name}", size=30, color="black"),
             ft.Text("Selecciona un color:", size=18, color="black"),
             cont2,
-            ft.Row([ft.ElevatedButton("Iniciar procesamiento", on_click=confirm_processing, bgcolor="#5E83BA", color="white", icon= ft.Icons.FAST_FORWARD_ROUNDED),
-                    ft.ElevatedButton("Volver", bgcolor="#5E83BA", color="white",on_click= lambda e: page.go("/loadObj"), icon=ft.Icons.ARROW_BACK)], alignment=ft.MainAxisAlignment.CENTER),
+            ft.Row([process_btn, backButton],alignment=ft.MainAxisAlignment.CENTER),
+            loading_indicator,
             result_text,
         ],
         spacing=20,
         expand=True,
         horizontal_alignment=ft.CrossAxisAlignment.CENTER,
     )
+
     foreground_container = ft.Container(
-    content=foreground_content,
-    alignment=ft.alignment.center,
-    expand=True,
-    padding=30
-)
+        content=foreground_content,
+        alignment=ft.alignment.center,
+        expand=True,
+        padding=30
+    )
 
     return ft.View(
         route="/process_color",
@@ -151,10 +186,7 @@ def process_color_view(page: ft.Page, appbar, object_name: str):
         controls=[
             appbar,
             ft.Stack(
-                [
-                    background_images,
-                    foreground_container,
-                ],
+                [background_images, foreground_container],
                 expand=True,
             )
         ]
