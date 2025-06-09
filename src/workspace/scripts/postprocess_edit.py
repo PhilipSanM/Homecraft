@@ -21,6 +21,8 @@ from distutils.dir_util import copy_tree
 from ultralytics import YOLO
 import torch
 import cv2
+import argparse
+import numpy as np
 
 import time
 
@@ -31,7 +33,8 @@ OBJECTS_FOLDER = '../YOLOv/objects/'
 # OG room foler
 ROOM_FOLDER = '../YOLOv/processed_room/'
 
-
+#edited path
+EDITED_OBJECT_FOLDER = 'resultados_coloreados/'
 
 # width, height
 SIZEZ_FROM_PREPROCESSING = [(540, 960), (270, 480), (135, 240)]
@@ -115,79 +118,95 @@ def correct_name(objects):
         
 
 
-def main():
+def main(object):
     
-    # working with background
-    # print('working background')
-    # 
-    # This line in code only with Stable diffusion model
-    # remove_images_with_objects_in_background()
-
-
-    # working with objects
-    # print('working with objects')
-
-    # correcting names
-    correct_name(os.listdir(OBJECTS_FOLDER))
-
-
     # getting the last possible image
     last_number = get_last_image_number()
 
-    # getting the objects founded
-    objects = os.listdir(OBJECTS_FOLDER)
+
+    # Making missing images from 1 to last_number
+    OBJECT_4EDIT_IMAGES_FOLDER = OBJECTS_FOLDER + object + '/images/' + EDITED_OBJECT_FOLDER
+
+    NEW_FOLDER_IMAGES_EDITES = OBJECTS_FOLDER + object + '_edited' +'/images/'
+
+    # remove folder if exists
+    if os.path.exists(NEW_FOLDER_IMAGES_EDITES):
+        shutil.rmtree(NEW_FOLDER_IMAGES_EDITES)
+
+
+    # COpyng folder into objects folder with the edit name now
+    if not os.path.exists(NEW_FOLDER_IMAGES_EDITES):
+        os.makedirs(NEW_FOLDER_IMAGES_EDITES)
+    # copying the edited images
+    shutil.copytree(OBJECT_4EDIT_IMAGES_FOLDER, NEW_FOLDER_IMAGES_EDITES, dirs_exist_ok=True)
+
+
+    #removing balck of images and adding RGBA channel
+    images = os.listdir(NEW_FOLDER_IMAGES_EDITES)
+    for image in images:
+
+        src = cv2.imread(NEW_FOLDER_IMAGES_EDITES + image, 1)
+
+        #remove black background
+        alpha = np.sum(src, axis=-1) > 0
+
+        alpha = np.uint8(alpha * 255)
+
+        result = np.dstack((src, alpha))
+        cv2.imwrite(NEW_FOLDER_IMAGES_EDITES + image, result)
+       
+
+
+        # print('adding RGBA channel to: ', NEW_FOLDER_IMAGES_EDITES + image)
+
     
-    for object in objects:
+    # adding missing images
+
+    for i in range(1, last_number + 1):
+        # if image exist jump
+
+        total_digits = 5
+        image_number = '0'*(total_digits - len(str(i))) + str(i)
+
+        if os.path.exists(NEW_FOLDER_IMAGES_EDITES + 'frame_' + image_number + '.png'):
+            # print('-----image already exists: ', i)
+            # Adding the RGBA channel to the image in background
+            img = Image.open(NEW_FOLDER_IMAGES_EDITES + 'frame_' + image_number + '.png')
+            img = img.convert('RGBA')
+            img.save(NEW_FOLDER_IMAGES_EDITES + 'frame_' + image_number + '.png')
+            continue
         
-        # Making missing images from 1 to last_number
-        OBJECT_IMAGES_FOLDER = OBJECTS_FOLDER + object + '/images/'
+        # print('creating dummy image: ', i)
+        # create dummy image
+        create_dummy_image((1080, 1920), NEW_FOLDER_IMAGES_EDITES, i)
 
 
-        for i in range(1, last_number + 1):
-            # if image exist jump
+    # making the other folders with their SIZEZ_FROM_PREPROCESSING
+    for i in range(len(FOLDER_NAMES_FROM_PREPROCESSING)):
+        foler = FOLDER_NAMES_FROM_PREPROCESSING[i]
+        size = SIZEZ_FROM_PREPROCESSING[i]
+
+        new_image_folder = OBJECTS_FOLDER + object + '_edited' + '/' + foler + '/'
+        # creating
+        if not os.path.exists(new_image_folder):
+            os.makedirs(new_image_folder)
+
+        og_folder = OBJECTS_FOLDER + object + '_edited' + '/images/'
+
+        for j in range(1, last_number + 1):
+            # copy the OG image and resize it
 
             total_digits = 5
-            image_number = '0'*(total_digits - len(str(i))) + str(i)
+            image_number = '0'*(total_digits - len(str(j))) + str(j)
 
-            if os.path.exists(OBJECT_IMAGES_FOLDER + 'frame_' + image_number + '.png'):
-                # print('-----image already exists: ', i)
-                # Adding the RGBA channel to the image in background
-                img = Image.open(OBJECT_IMAGES_FOLDER + 'frame_' + image_number + '.png')
-                img = img.convert('RGBA')
-                img.save(OBJECT_IMAGES_FOLDER + 'frame_' + image_number + '.png')
-                continue
-            
-            # print('creating dummy image: ', i)
-            # create dummy image
-            create_dummy_image((1080, 1920), OBJECT_IMAGES_FOLDER, i)
+            og_image_path = og_folder + 'frame_' + image_number + '.png'
+            new_image_path = new_image_folder + 'frame_' + image_number + '.png'
 
+            og_image = Image.open(og_image_path)
 
-        # making the other folders with their SIZEZ_FROM_PREPROCESSING
-        for i in range(len(FOLDER_NAMES_FROM_PREPROCESSING)):
-            foler = FOLDER_NAMES_FROM_PREPROCESSING[i]
-            size = SIZEZ_FROM_PREPROCESSING[i]
+            new_image = og_image.resize(size)
 
-            new_image_folder = OBJECTS_FOLDER + object + '/' + foler + '/'
-            # creating
-            if not os.path.exists(new_image_folder):
-                os.makedirs(new_image_folder)
-
-            og_folder = OBJECTS_FOLDER + object + '/images/'
-
-            for j in range(1, last_number + 1):
-                # copy the OG image and resize it
-
-                total_digits = 5
-                image_number = '0'*(total_digits - len(str(j))) + str(j)
-
-                og_image_path = og_folder + 'frame_' + image_number + '.png'
-                new_image_path = new_image_folder + 'frame_' + image_number + '.png'
-
-                og_image = Image.open(og_image_path)
-
-                new_image = og_image.resize(size)
-
-                new_image.save(new_image_path)
+            new_image.save(new_image_path)
 
 
 
@@ -199,20 +218,17 @@ def main():
         TRANSFORMS_FILE_PATH = PROCESSED_FOLDER + 'transforms.json'
 
         # Copying all files into new object folder
-        copy_tree(COLMAP_FOLDER, OBJECTS_FOLDER + object + '/colmap/')
+        copy_tree(COLMAP_FOLDER, OBJECTS_FOLDER + object + '_edited' + '/colmap/')
 
-        shutil.copy(SPARCE_FILE_PATH, OBJECTS_FOLDER + object + '/sparse_pc.ply')
-        shutil.copy(TRANSFORMS_FILE_PATH, OBJECTS_FOLDER + object + '/transforms.json')
-
+        shutil.copy(SPARCE_FILE_PATH, OBJECTS_FOLDER + object + '_edited' + '/sparse_pc.ply')
+        shutil.copy(TRANSFORMS_FILE_PATH, OBJECTS_FOLDER + object + '_edited' + '/transforms.json')
 
 
 
 if __name__ == '__main__':
-    print('Starting postprocessing....')
-    start = time.time()
-    main()
-    end = time.time()
-    print('Postprocessing finished in: ', end - start)
+    parser = argparse.ArgumentParser(description='Make the postprocess of a edit object')
+    parser.add_argument('--object_name', type=str, help='Name of the object to export')
+    
+    args = parser.parse_args()
 
-
-
+    main(args.object_name)
