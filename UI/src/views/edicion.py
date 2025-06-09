@@ -59,16 +59,23 @@ def process_images(input_folder, mask_folder, output_folder, target_color):
 
 
 def process_color_view(page: ft.Page, appbar, object_name: str):
-    result_text=ft.Text("")
+    page.title = "HomeCraft - Edición"
+    page.update()
+
+    result_text = ft.Text("")
+
+    color_picker = ColorPicker("#3A4E7A")
+    cont2 = ft.Container(content=color_picker, bgcolor="#2E4172", padding=10, border_radius=15)
 
     def confirm_processing(e):
-        hex_color = ColorPicker()
-        print(hex_color)
+        hex_color = color_picker.color
+        print(f"Color seleccionado: {hex_color}")
         try:
             selected_bgr = hex_to_bgr(hex_color)
-            print(selected_bgr)
-        except:
-            print("AAAAaaa")
+        except Exception as ex:
+            print(f"Error al convertir color: {ex}")
+            result_text.value = "❌ Error al procesar el color seleccionado."
+            result_text.color = "red"
             page.update()
             return
 
@@ -81,20 +88,74 @@ def process_color_view(page: ft.Page, appbar, object_name: str):
         result_text.color = "green"
         page.update()
 
+    # Imágenes de fondo con baja opacidad
+    background_images = ft.Stack(
+        [
+            ft.Container(
+                content=ft.Image(
+                    src='images/cubo.png',
+                    width=150,
+                    fit=ft.ImageFit.CONTAIN,
+                    rotate=ft.Rotate(0.0)
+                ),
+                alignment=ft.alignment.top_left,
+                expand=True,
+            ),
+            ft.Container(
+                content=ft.Image(
+                    src='images/figuraD2.png',
+                    width=150,
+                    fit=ft.ImageFit.CONTAIN,
+                    rotate=ft.Rotate(-0.6),
+                ),
+                alignment=ft.alignment.center_right,
+                expand=True,
+            ),
+            ft.Container(
+                content=ft.Image(
+                    src='images/figuraD.png',
+                    width=150,
+                    fit=ft.ImageFit.CONTAIN,
+                    rotate=ft.Rotate(-0.3),
+                ),
+                alignment=ft.alignment.bottom_left,
+                expand=True,
+            ),
+        ]
+    )
+
+    # Contenido principal encima de las imágenes
+    foreground_content = ft.Column(
+        [
+            ft.Text(f"Procesamiento de imágenes para objeto: {object_name}", size=30, color="black"),
+            ft.Text("Selecciona un color:", size=18, color="black"),
+            cont2,
+            ft.Row([ft.ElevatedButton("Iniciar procesamiento", on_click=confirm_processing, bgcolor="#5E83BA", color="white", icon= ft.Icons.FAST_FORWARD_ROUNDED),
+                    ft.ElevatedButton("Volver", bgcolor="#5E83BA", color="white",on_click= lambda e: page.go("/loadObj"), icon=ft.Icons.ARROW_BACK)], alignment=ft.MainAxisAlignment.CENTER),
+            result_text,
+        ],
+        spacing=20,
+        expand=True,
+        horizontal_alignment=ft.CrossAxisAlignment.CENTER,
+    )
+    foreground_container = ft.Container(
+    content=foreground_content,
+    alignment=ft.alignment.center,
+    expand=True,
+    padding=30
+)
+
     return ft.View(
         route="/process_color",
         bgcolor="#E5E5E5",
         controls=[
             appbar,
-            ft.Column(
+            ft.Stack(
                 [
-                    ft.Text(f"Procesamiento de imágenes para objeto: {object_name}", size=30),
-                    ft.Text("Selecciona un color:", size=18),
-                    ft.ElevatedButton("Iniciar procesamiento", on_click=confirm_processing),
-                    result_text,
+                    background_images,
+                    foreground_container,
                 ],
-                spacing=20,
-                expand=True
+                expand=True,
             )
         ]
     )
